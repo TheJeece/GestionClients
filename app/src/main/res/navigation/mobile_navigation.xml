@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_Sheet">
+
+    <fragment
+        android:id="@+id/nav_Sheet"
+        android:name="com.jcr.GestionClients.ui.Sheet.SheetFragment"
+        android:label="@string/menu_Sheet"
+        tools:layout="@layout/fragment_sheet" >
+        <action
+            android:id="@+id/action_nav_sheet_to_nav_sheetAdd"
+            app:destination="@id/nav_SheetAdd"
+            app:enterAnim="@anim/open_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/open_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_SheetAdd"
+        android:name="com.jcr.GestionClients.ui.Sheet.SheetDetailFragment"
+        android:label="Ajouter une fiche"
+        tools:layout="@layout/fragment_sheet_add" >
+
+        <action
+            android:id="@+id/action_nav_SheetAdd_to_nav_Sheet"
+            app:destination="@id/nav_Sheet"
+            app:enterAnim="@anim/open_from_left"
+            app:exitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_Prestations"
+        android:name="com.jcr.GestionClients.ui.Prestations.CategoriesFragment"
+        android:label="@string/menu_Presta"
+        tools:layout="@layout/fragment_list_categories" >
+        <action
+            android:id="@+id/action_nav_ListeCategories_to_nav_ListePrestations"
+            app:destination="@id/nav_ListePrestations"
+            app:enterAnim="@anim/open_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/open_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_Prestations_to_nav_EditCat"
+            app:destination="@id/nav_EditCat"
+            app:enterAnim="@anim/open_from_left"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/open_from_right"
+            app:popExitAnim="@anim/exit_to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_ListePrestations"
+        android:name="com.jcr.GestionClients.ui.Prestations.PrestationsFragment"
+        tools:layout="@layout/fragment_list_prestations" >
+        <action
+            android:id="@+id/action_nav_ListePrestations_to_nav_ListeCategories"
+            app:destination="@id/nav_Prestations"
+            app:enterAnim="@anim/open_from_left"
+            app:exitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_ListePrestations_to_nav_EditPresta"
+            app:destination="@id/nav_EditPresta"
+            app:enterAnim="@anim/open_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/open_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_EditCat"
+        android:name="com.jcr.GestionClients.ui.Prestations.CategoryEditFragment"
+        tools:layout="@layout/fragment_category_edit" >
+
+
+        <action
+            android:id="@+id/action_nav_EditCat_to_nav_Prestations"
+            app:destination="@id/nav_Prestations"
+            app:enterAnim="@anim/open_from_right"
+            app:exitAnim="@anim/exit_to_left" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_EditPresta"
+        android:name="com.jcr.GestionClients.ui.Prestations.PrestationEditFragment"
+        tools:layout="@layout/fragment_list_prestation_edit" >
+        <action
+            android:id="@+id/action_nav_EditPresta_to_nav_ListePrestations"
+            app:destination="@id/nav_ListePrestations"
+            app:enterAnim="@anim/open_from_left"
+            app:exitAnim="@anim/exit_to_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_Clients"
+        android:name="com.jcr.GestionClients.ui.Clients.ClientsFragment"
+        android:label="@string/menu_Clients"
+        tools:layout="@layout/fragment_client">
+
+        <action
+            android:id="@+id/action_nav_Clients_to_EditClient"
+            app:destination="@id/nav_AddClient"
+            app:enterAnim="@anim/open_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/open_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_AddClient"
+        android:name="com.jcr.GestionClients.ui.Clients.ClientEditFragment"
+        android:label="@string/NewClient"
+        tools:layout="+id/layout/fragment_client_edit">
+        <action
+            android:id="@+id/action_nav_AddClient_to_Clients"
+            app:destination="@id/nav_Clients"
+            app:enterAnim="@anim/open_from_left"
+            app:exitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_import_export"
+        android:name="com.jcr.GestionClients.ui.Backup"
+        android:label="Importer/export bdd"
+        tools:layout="@layout/fragment_import_export"
+        />
+
+</navigation>

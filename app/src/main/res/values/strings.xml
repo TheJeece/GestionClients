@@ -1,0 +1,78 @@
+<resources>
+
+    <string name="app_name">Gestion Clients</string>
+    <string name="DBname">dbGestionClients</string>
+    <string name="BackupDir">"/GestionClients/"</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!--Menu d'action-->
+    <string name="action1">Add</string>
+    <string name="action2">...</string>
+    <string name="search_hint">Rechercher</string>
+
+    <!--Menu latéral-->
+    <string name="nav_header_title">Sandrine Esthétique</string>
+    <string name="nav_header_subtitle">Gestion des fiches client</string>
+    <string name="menu_Sheet">Fiches client</string>
+    <string name="menu_Presta">Liste des prix</string>
+    <string name="menu_Clients">Fichier clients</string>
+
+    <!--Onglet Clients-->
+    <string name="fabAddClient">Ajouter un nouveau client</string>
+
+    <!--Ajout de clients-->
+    <string name="NewClient">Nouveau client</string>
+    <string name="ClientName">Nom du client</string>
+    <string name="ClientPhone">Téléphone</string>
+    <string name="ClientMail">Adresse e-mail</string>
+    <string name="ClientAddress">Adresse</string>
+    <string name="ClientBday">Date d\'anniversaire</string>
+
+    <!--Import de client-->
+    <string name="ImportClient">Importer contacts</string>
+
+    <!--Liste des prestations-->
+    <string name="Categories">Catégories</string>
+    <string name="Prestations">Prestations</string>
+    <string name="AddCat">Nouvelle catégorie</string>
+    <string name="DelCat">Supprimer catégorie</string>
+    <string name="AddPresta">Nouvelle prestation</string>
+    <string name="Categorie">Catégorie</string>
+    <string name="Prestation">Prestation</string>
+    <string name="Price">Prix</string>
+    <string name="cardCatTitle">Title</string>
+    <string name="cardSubtitle">subTitle</string>
+    <string name="cardTitle">Title</string>
+    <string name="cardPrice">Price</string>
+    <string name="importCatDefault">Importer valeurs par défaut</string>
+    <string name="SponsorName">Parrain/marraine</string>
+    <string name="CalcPrice">Prix calculé</string>
+    <string name="DiscountPrice">Prix remisé</string>
+    <string name="PaidSheet">Fiche acquittée</string>
+    <string name="NameDoesNotExists">Le nom n\'existe pas dans le fichier client</string>
+    <string name="NameEmpty">Entrée obligatoire</string>
+    <string name="Date">Date de la prestation</string>
+    <string name="DateFormatIncorrect">Format date incorrect</string>
+    <string name="CategoryDoesNotExists">La catégorie n\'existe pas</string>
+    <string name="CategoryEmpty">La catégorie est requise</string>
+    <string name="PrestaCatInvalid">Choisir une catégorie valide</string>
+    <string name="PrestationDoesNotExists">La prestation n\'existe pas</string>
+    <string name="PrestationEmpty">La prestation est requise</string>
+    <string name="PriceEmpty">Le prix de la prestation est requis</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="DateEmpty">La date est requise</string>
+    <string name="PrestaInvalid">Choisir une prestation valide</string>
+    <string name="EmptyField">Champ requis</string>
+    <string name="NameInContactList">Nom présent dans le répertoire</string>
+    <string name="NameExists">Modification du client déjà enregistré</string>
+    <string name="EditCat">Editer catégorie</string>
+    <string name="CategoryAlreadyExists">Cette catégorie existe déjà</string>
+    <string name="EditClient">Modifier le contact</string>
+
+    <!--Fiches clients-->
+
+</resources>

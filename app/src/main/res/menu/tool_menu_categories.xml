@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/DelCat"
+        android:icon="@drawable/ic_edit"
+        android:orderInCategory="100"
+        android:title="@string/EditCat"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ImportDefaultCatPresta"
+        android:icon="@drawable/ic_import"
+        android:orderInCategory="100"
+        android:title="@string/importCatDefault"
+        app:showAsAction="never" />
+
+</menu>

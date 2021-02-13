@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/id_list_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/Brown_100"
+        android:text="TextView"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/id_list_item3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Group" />
+
+    <TextView
+        android:id="@+id/id_list_item1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="Item1"
+        app:layout_constraintEnd_toStartOf="@+id/id_list_item2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_list_group" />
+
+    <TextView
+        android:id="@+id/id_list_item2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item2"
+        app:layout_constraintEnd_toStartOf="@+id/id_check_list"
+        app:layout_constraintTop_toTopOf="@+id/id_list_item1" />
+
+    <TextView
+        android:id="@+id/id_list_item3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="item3"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_list_group" />
+
+    <CheckBox
+        android:id="@+id/id_check_list"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/id_list_item1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_list_item1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

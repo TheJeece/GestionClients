@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_Sheet"
+            android:icon="@drawable/ic_sheet"
+            android:title="@string/menu_Sheet" />
+        <item
+            android:id="@+id/nav_Prestations"
+            android:icon="@drawable/ic_presta"
+            android:title="@string/menu_Presta" />
+        <item
+            android:id="@+id/nav_Clients"
+            android:icon="@drawable/ic_contact"
+            android:title="@string/menu_Clients" />
+    </group>
+    <item android:title="Sauvegarder">
+        <menu>
+            <item
+                android:id="@+id/nav_import_export"
+                android:title="Importer/exporter"
+                android:icon="@drawable/ic_import_export"/>
+
+        </menu>
+
+    </item>
+    <group>
+
+
+        </group>
+
+</menu>
