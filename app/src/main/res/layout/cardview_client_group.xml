@@ -7,51 +7,24 @@
 
     <TextView
         android:id="@+id/id_text_sheet_item_group"
-        android:layout_width="0dp"
+        android:layout_width="15dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginLeft="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        android:text="Date"
+        android:text="A"
         android:textSize="@dimen/title_size"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@+id/id_text_sheet_groupItem"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/id_text_euro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:text=" €"
-        android:textSize="@dimen/title_size"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/id_text_sheet_item_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_text_sheet_item_group" />
-
-    <TextView
-        android:id="@+id/id_text_sheet_groupItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="@dimen/Group_item_size"
-        app:layout_constraintBottom_toBottomOf="@+id/id_text_sheet_item_group"
-        app:layout_constraintEnd_toStartOf="@+id/id_text_euro"
-        app:layout_constraintTop_toTopOf="@+id/id_text_sheet_item_group" />
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_text_sheet_item_group">
+        app:layout_constraintStart_toEndOf="@+id/id_text_sheet_item_group"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,8 +35,6 @@
                 android:id="@+id/id_text_sheet_item_mainItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="left|center_vertical"
@@ -91,33 +62,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginLeft="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
                 android:text="TextView"
                 android:textSize="@dimen/Sub_item_size"
-                app:layout_constraintEnd_toStartOf="@+id/id_text_sheet_item_price"
                 app:layout_constraintStart_toEndOf="@+id/im_not_paid"
                 app:layout_constraintStart_toStartOf="@+id/id_text_sheet_item_mainItem"
-                app:layout_constraintTop_toBottomOf="@+id/id_text_sheet_item_mainItem" />
-
-            <TextView
-                android:id="@+id/id_text_sheet_item_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="@dimen/Sub_item_size"
-                app:layout_constraintEnd_toStartOf="@id/id_text_sheet_item_euro"
-                app:layout_constraintTop_toBottomOf="@+id/id_text_sheet_item_mainItem" />
-
-            <TextView
-                android:id="@+id/id_text_sheet_item_euro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:text=" €"
-                android:textSize="@dimen/Sub_item_size"
-                app:layout_constraintEnd_toStartOf="@+id/id_check_sheet_item"
                 app:layout_constraintTop_toBottomOf="@+id/id_text_sheet_item_mainItem" />
 
             <ImageView

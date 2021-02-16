@@ -24,9 +24,9 @@ public class ClientModel extends ViewModel {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String TAG = "ClientModel";
 
-    public void Add(Context context, String name, String phone, String mail, String address, String bday) {
+    public void Add(Context context, String name, String phone, String mail, String address, String bday, String note) {
         dbh = new DatabaseHandler(context);
-        dbh.insertClientData(name, phone, mail, address, bday);
+        dbh.insertClientData(name, phone, mail, address, bday, note);
     }
     public int getKey(Context context, String name) {
         dbh = new DatabaseHandler(context);
@@ -99,6 +99,16 @@ public class ClientModel extends ViewModel {
         dbh.setClientData(tableName,5,key,newData);
     }
 
+    public String getNote(Context context, int key) {
+        dbh = new DatabaseHandler(context);
+        return dbh.getDataFromKey(tableName, key,DatabaseHandler.columnContactNote);
+    }
+
+    public void setNote(Context context, int key, String newData) {
+        dbh = new DatabaseHandler(context);
+        dbh.setClientData(tableName,DatabaseHandler.columnContactNote,key,newData);
+    }
+
     public boolean clientExists(Context context, String name) {
         List names = getNames(context);
         for (int i=0;i<names.size();i++) {
@@ -126,8 +136,9 @@ public class ClientModel extends ViewModel {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        String note = dbh.getDataFromKey(DatabaseHandler.tableContacts,ID,DatabaseHandler.columnContactNote);
 
-        return new Client(name,phone,address,mail,bDay,false);
+        return new Client(name,phone,address,mail,bDay,note,false);
     }
 
     public List<Client> getClients (Context context) {
@@ -271,6 +282,7 @@ public class ClientModel extends ViewModel {
         cAddresses.close();
         return addresses;
     }
+
 
 
 }

@@ -55,18 +55,18 @@ import static com.jcr.GestionClients.ui.Sheet.SheetFragment.sheetKey;
 public class SheetDetailFragment extends Fragment {
 
     Context context;
-    private RecyclerView rvDetails;
-    private TextInputLayout tilDate,tilName,tilSponsor,tilCategory,tilPrestation,tilPrice;
-    private AutoCompleteTextView name,sponsor,category,prestation;
-    private EditText date,calcPrice,price;
-    private Switch paid;
-    private ImageButton add,del;
-    private ClientModel clientModel;
-    private PrestationsModel prestationsModel;
-    private SheetModel sheetModel;
-    private Sheet sheet;
-    public SheetDetail detail;
-    private final String TAG = "PrestaSheetAddFragment";
+    private RecyclerView            rvDetails;
+    private TextInputLayout         tilDate,tilName,tilSponsor,tilCategory,tilPrestation,tilPrice;
+    private AutoCompleteTextView    name,sponsor,category,prestation;
+    private EditText                date,calcPrice,price,note;
+    private Switch                  paid;
+    private ImageButton             add,del;
+    private ClientModel             clientModel;
+    private PrestationsModel        prestationsModel;
+    private SheetModel              sheetModel;
+    private Sheet                   sheet;
+    public SheetDetail              detail;
+    private final String            TAG = "PrestaSheetAddFragment";
 
     int Year,Month,Day;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -86,31 +86,31 @@ public class SheetDetailFragment extends Fragment {
         Log.i(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_sheet_add, container, false);
 
-        clientModel = new ViewModelProvider(this).get(ClientModel.class);
-        prestationsModel = new ViewModelProvider(this).get(PrestationsModel.class);
-        sheetModel = new ViewModelProvider(this).get(SheetModel.class);
+        clientModel         = new ViewModelProvider(this).get(ClientModel.class);
+        prestationsModel    = new ViewModelProvider(this).get(PrestationsModel.class);
+        sheetModel          = new ViewModelProvider(this).get(SheetModel.class);
 
         //a modifier lors de l'ouverture d'une fiche
-        sheet = new Sheet(-1,null,"","",detailList,0,true,false);
+        sheet = new Sheet(-1,null,"","",detailList,0,true,"",false);
 //        sheet = new ViewModelProvider(this).get(PrestaSheet.class);
 
-        rvDetails = view.findViewById(R.id.id_rv_sheet_presta);
-        tilDate = view.findViewById(R.id.id_til_sheet_date);
-        date = view.findViewById(R.id.id_et_sheet_date);
-        tilName = view.findViewById(R.id.id_til_sheet_name);
-        name = view.findViewById(R.id.id_actv_sheet_name);
-        tilSponsor = view.findViewById(R.id.id_til_sheet_sponsor);
-        sponsor = view.findViewById(R.id.id_actv_sheet_sponsor);
-        tilCategory = view.findViewById(R.id.id_til_sheet_cat);
-        category = view.findViewById(R.id.id_actv_sheet_cat);
-        tilPrestation = view.findViewById(R.id.id_til_sheet_presta);
-        prestation = view.findViewById(R.id.id_actv_sheet_presta);
-        calcPrice = view.findViewById(R.id.id_et_sheet_calc);
-        tilPrice = view.findViewById(R.id.id_til_sheet_price);
-        price = view.findViewById(R.id.id_et_sheet_price);
-        add=view.findViewById(R.id.id_btn_sheet_add);
-        del=view.findViewById(R.id.id_btn_sheet_del);
-        paid=view.findViewById(R.id.id_switch_sheet_paid);
+        rvDetails       = view.findViewById(R.id.id_rv_sheet_presta);
+        tilDate         = view.findViewById(R.id.id_til_sheet_date);
+        date            = view.findViewById(R.id.id_et_sheet_date);
+        tilName         = view.findViewById(R.id.id_til_sheet_name);
+        name            = view.findViewById(R.id.id_actv_sheet_name);
+        tilSponsor      = view.findViewById(R.id.id_til_sheet_sponsor);
+        sponsor         = view.findViewById(R.id.id_actv_sheet_sponsor);
+        tilCategory     = view.findViewById(R.id.id_til_sheet_cat);
+        category        = view.findViewById(R.id.id_actv_sheet_cat);
+        tilPrestation   = view.findViewById(R.id.id_til_sheet_presta);
+        prestation      = view.findViewById(R.id.id_actv_sheet_presta);
+        calcPrice       = view.findViewById(R.id.id_et_sheet_calc);
+        tilPrice        = view.findViewById(R.id.id_til_sheet_price);
+        price           = view.findViewById(R.id.id_et_sheet_price);
+        add             =view.findViewById(R.id.id_btn_sheet_add);
+        del             =view.findViewById(R.id.id_btn_sheet_del);
+        paid            =view.findViewById(R.id.id_switch_sheet_paid);
 
         //Remplissage de la feuille
         if (sheetKey !=-1) {
@@ -235,7 +235,8 @@ public class SheetDetailFragment extends Fragment {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            date.setText(dayOfMonth + "/" + (month +1) + "/" + year);
+                            String sDate = dayOfMonth + "/" + (month +1) + "/" + year;
+                            date.setText(sDate);
                         }
                     }, Year, Month, Day);
                     datePickerDialog.show();
@@ -482,12 +483,10 @@ public class SheetDetailFragment extends Fragment {
         price.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -642,7 +641,8 @@ public class SheetDetailFragment extends Fragment {
                 clientModel.getKey(context, sheet.getSponsor()),
                 sheet.getDate(),
                 sheet.getPrice(),
-                sheet.isPaid()
+                sheet.isPaid(),
+                sheet.getNote()
         );
 
         saveDetails(context,sheetKey);

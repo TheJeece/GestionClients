@@ -21,83 +21,89 @@ import com.jcr.GestionClients.ui.Prestations.Category;
 import com.jcr.GestionClients.ui.Prestations.Prestation;
 import com.jcr.GestionClients.ui.Sheet.Sheet;
 
+import javax.security.auth.login.LoginException;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION =1;
-    private static final String DATABASE_NAME = "dbGestionClients";
+    private static final int        DATABASE_VERSION =1;
+    private static final String     DATABASE_NAME = "dbGestionClients";
 
-    private final String TAG = "DataBaseHandler";
+    private final String            TAG = "DataBaseHandler";
+
     //Tables des contacts
-
     public static final String
-            tableContacts = "Contacts",
-            tableCategories = "Categories",
-            tablePrestations = "Prestations",
-            tableSheet = "Fiches",
-            tableDetailSheet = "Fiches_detail";
+            tableContacts       = "Contacts",
+            tableCategories     = "Categories",
+            tablePrestations    = "Prestations",
+            tableSheet          = "Fiches",
+            tableDetailSheet    = "Fiches_detail";
 
     private static final String
             TABLE_CONTACTS = tableContacts,
-            COLUMN_ID = "id", //0
-            COLUMN_NAME = "Nom", //1
-            COLUMN_PHONE = "Téléphone",//2
-            COLUMN_MAIL = "Mail",//3
-            COLUMN_ADDRESS = "Adresse",//4
-            COLUMN_BDAY = "Anniversaire";//5
+            COLUMN_ID           = "id", //0
+            COLUMN_NAME         = "Nom", //1
+            COLUMN_PHONE        = "Téléphone",//2
+            COLUMN_MAIL         = "Mail",//3
+            COLUMN_ADDRESS      = "Adresse",//4
+            COLUMN_BDAY         = "Anniversaire",//5
+            COLUMN_NOTE         = "Notes";
 
     public static final int
-            columnContactName = 1,
-            columnContactPhone = 2,
-            columnContactMail = 3,
+            columnContactName   = 1,
+            columnContactPhone  = 2,
+            columnContactMail   = 3,
             columnContactAddress = 4,
-            columnContactBday = 5;
+            columnContactBday   = 5,
+            columnContactNote   = 6;
 
     //Table des prestations
     private static final String
-            TABLE_CAT = tableCategories,
-            COLUMN_CAT = "Catégorie", //1
-            COLUMN_CAT_IMAGE = "Image";
+            TABLE_CAT                   = tableCategories,
+            COLUMN_CAT                  = "Catégorie",      //1
+            COLUMN_CAT_IMAGE            = "Image";          //2
 
     public static final int
-            columnCategory = 1,
-            columnImage = 2;
+            columnCategory              = 1,
+            columnImage                 = 2;
 
     //Table des prix
     private static final String
-            TABLE_PRESTA = tablePrestations,
-            COLUMN_PRESTA_CAT_ID = "idCategorie", //1
-            COLUMN_PRESTA = "Prestation", //2
-            COLUMN_PRESTA_PRICE = "Prix"; //3
+            TABLE_PRESTA                = tablePrestations,
+            COLUMN_PRESTA_CAT_ID        = "idCategorie",    //1
+            COLUMN_PRESTA               = "Prestation",     //2
+            COLUMN_PRESTA_PRICE         = "Prix";           //3
 
     public static final int
-            columnPrestaCategory = 1,
-            columnPrestation = 2,
-            columnPrestaPrice = 3;
+            columnPrestaCategory        = 1,
+            columnPrestation            = 2,
+            columnPrestaPrice           = 3;
 
     //Table des fiches
     private static final String
-            TABLE_SHEET = tableSheet,
-            COLUMN_SHEET_DATE = "Date",                 //1
-            COLUMN_SHEET_CLIENT_ID = "idClient",        //2
-            COLUMN_SHEET_SPONSOR_ID = "Parrain",        //3
-            COLUMN_SHEET_PRICE_DISCOUNT = "Prix_remise",//4
-            COLUMN_SHEET_PAID = "Acquittee";            //5
+            TABLE_SHEET                 = tableSheet,
+            COLUMN_SHEET_DATE           = "Date",           //1
+            COLUMN_SHEET_CLIENT_ID      = "idClient",       //2
+            COLUMN_SHEET_SPONSOR_ID     = "Parrain",        //3
+            COLUMN_SHEET_PRICE_DISCOUNT = "Prix_remise",    //4
+            COLUMN_SHEET_PAID           = "Acquittee",      //5
+            COLUMN_SHEET_NOTES          = "Notes";          //6
 
     public static final int
-            columnSheetDate = 1,
-            columnSheetClientID = 2,
-            columnSheetSponsorID = 3,
-            columnSheetPrice = 4,
-            columnSheetIsPaid = 5;
+            columnSheetDate             = 1,
+            columnSheetClientID         = 2,
+            columnSheetSponsorID        = 3,
+            columnSheetPrice            = 4,
+            columnSheetIsPaid           = 5,
+            columnSheetNotes            = 6;
 
     //tables des fiches détail
     private static final String
-            TABLE_SHEET_DETAIL = tableDetailSheet,
-            COLUMN_DETAIL_SHEET_ID = "idFiche",            //1
-            COLUMN_DETAIL_PRESTA_ID = "idPresta";          //2
+            TABLE_SHEET_DETAIL          = tableDetailSheet,
+            COLUMN_DETAIL_SHEET_ID      = "idFiche",            //1
+            COLUMN_DETAIL_PRESTA_ID     = "idPresta";          //2
 
     public static final int
-            columnDetailSheetID = 1,
-            columnDetailPrestaID = 2;
+            columnDetailSheetID         = 1,
+            columnDetailPrestaID        = 2;
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -113,12 +119,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          */
         String CREATE_TABLE_CONTACTS = "CREATE TABLE IF NOT EXISTS " + TABLE_CONTACTS +
                 "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_NAME + " TEXT UNIQUE," +
-                COLUMN_PHONE + " TEXT," +
-                COLUMN_MAIL + " TEXT," +
-                COLUMN_ADDRESS + " TEXT," +
-                COLUMN_BDAY + " DATE" +
+                COLUMN_ID       + " INTEGER PRIMARY KEY," +
+                COLUMN_NAME     + " TEXT UNIQUE," +
+                COLUMN_PHONE    + " TEXT," +
+                COLUMN_MAIL     + " TEXT," +
+                COLUMN_ADDRESS  + " TEXT," +
+                COLUMN_BDAY     + " DATE," +
+                COLUMN_NOTE     + " TEXT" +
                 ")";
         db.execSQL(CREATE_TABLE_CONTACTS);
 
@@ -127,8 +134,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          */
         String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS " + TABLE_CAT +
                 " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_CAT + " TEXT," +
+                COLUMN_ID       + " INTEGER PRIMARY KEY," +
+                COLUMN_CAT      + " TEXT," +
                 COLUMN_CAT_IMAGE + " BLOB" +
                 ")";
         db.execSQL(CREATE_TABLE_CATEGORIES);
@@ -139,10 +146,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          */
         String CREATE_TABLE_PRESTATIONS = "CREATE TABLE IF NOT EXISTS " + TABLE_PRESTA +
                 " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," + //0
-                COLUMN_PRESTA_CAT_ID + " INTEGER," + //1
-                COLUMN_PRESTA + " TEXT," + //2
-                COLUMN_PRESTA_PRICE + " NUMERIC" + //3
+                COLUMN_ID               + " INTEGER PRIMARY KEY," + //0
+                COLUMN_PRESTA_CAT_ID    + " INTEGER," +             //1
+                COLUMN_PRESTA           + " TEXT," +                //2
+                COLUMN_PRESTA_PRICE     + " NUMERIC" +              //3
                 ")";
         db.execSQL(CREATE_TABLE_PRESTATIONS);
 
@@ -151,12 +158,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          */
         String CREATE_TABLE_SHEETS = "CREATE TABLE IF NOT EXISTS " + TABLE_SHEET +
                 " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +       //0
-                COLUMN_SHEET_DATE + " TEXT," +              //1
-                COLUMN_SHEET_CLIENT_ID + " INTEGER," +      //2
-                COLUMN_SHEET_SPONSOR_ID + " INTEGER," +     //3
-                COLUMN_SHEET_PRICE_DISCOUNT + " NUMERIC," + //4
-                COLUMN_SHEET_PAID + " INTEGER" +            //5
+                COLUMN_ID                   + " INTEGER PRIMARY KEY," + //0
+                COLUMN_SHEET_DATE           + " TEXT," +                //1
+                COLUMN_SHEET_CLIENT_ID      + " INTEGER," +             //2
+                COLUMN_SHEET_SPONSOR_ID     + " INTEGER," +             //3
+                COLUMN_SHEET_PRICE_DISCOUNT + " NUMERIC," +             //4
+                COLUMN_SHEET_PAID           + " INTEGER," +             //5
+                COLUMN_SHEET_NOTES          + " TEXT" +                 //6
                 ")";
         db.execSQL(CREATE_TABLE_SHEETS);
 
@@ -165,8 +173,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          */
         String CREATE_TABLE_SHEET_DETAIL = "CREATE TABLE IF NOT EXISTS " + TABLE_SHEET_DETAIL +
                 "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_DETAIL_SHEET_ID + " INTEGER," +
+                COLUMN_ID               + " INTEGER PRIMARY KEY," +
+                COLUMN_DETAIL_SHEET_ID  + " INTEGER," +
                 COLUMN_DETAIL_PRESTA_ID + " INTEGER" +
         ")";
         db.execSQL(CREATE_TABLE_SHEET_DETAIL);
@@ -191,14 +199,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /*
     AJOUT DE NOUVELLES VALEURS DANS LA BDD CLIENTS
      */
-    public void insertClientData(String name, String phone, String mail, String address, String bday){
+    public void insertClientData(String name, String phone, String mail, String address, String bday, String note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, name);//column name, column value
-        values.put(COLUMN_PHONE,phone);
-        values.put(COLUMN_MAIL, mail);
-        values.put(COLUMN_ADDRESS,address);
-        values.put(COLUMN_BDAY,bday);
+        values.put(COLUMN_NAME      , name);//column name, column value
+        values.put(COLUMN_PHONE     , phone);
+        values.put(COLUMN_MAIL      , mail);
+        values.put(COLUMN_ADDRESS   , address);
+        values.put(COLUMN_BDAY      , bday);
+        values.put(COLUMN_NOTE      , note);
 
         // Inserting Row
         db.insert(TABLE_CONTACTS,null,values);
@@ -315,6 +324,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             COLUMN = COLUMN_ADDRESS;
         } else if(columnIndex == 5) {
             COLUMN = COLUMN_BDAY;
+        }else if(columnIndex == 6) {
+            COLUMN = COLUMN_NOTE;
+
         }
         contentValues.put(COLUMN,strEdit);
         db.update(TABLENAME,contentValues,COLUMN_ID + " = " + key,null);
@@ -331,11 +343,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int sponsorID= getKey(TABLE_CONTACTS,sheet.getSponsor());
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_SHEET_DATE,simpleDateFormat.format(sheet.getDate()));
-        contentValues.put(COLUMN_SHEET_CLIENT_ID,clientID);
-        contentValues.put(COLUMN_SHEET_SPONSOR_ID,sponsorID);
-        contentValues.put(COLUMN_SHEET_PRICE_DISCOUNT,sheet.getPrice());
-        contentValues.put(COLUMN_SHEET_PAID,sheet.isPaid());
+        contentValues.put(COLUMN_SHEET_DATE             ,simpleDateFormat.format(sheet.getDate()));
+        contentValues.put(COLUMN_SHEET_CLIENT_ID        ,clientID);
+        contentValues.put(COLUMN_SHEET_SPONSOR_ID       ,sponsorID);
+        contentValues.put(COLUMN_SHEET_PRICE_DISCOUNT   ,sheet.getPrice());
+        contentValues.put(COLUMN_SHEET_PAID             ,sheet.isPaid());
+        contentValues.put(COLUMN_SHEET_NOTES            ,sheet.getNote());
 
         SQLiteDatabase db = this.getReadableDatabase();
         db.update(TABLE_SHEET,contentValues,COLUMN_ID + " = " + sheetKey,null);
@@ -388,12 +401,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     RECUPERE LA DONNE CORRESPONDANTE A LA CLE AVEC LA COLONNE
      */
     public String getDataFromKey(String TABLENAME, int key, int columnIndex) {
+
+        Log.i(TAG, "getDataFromKey: " + TABLENAME);
+        Log.i(TAG, "getDataFromKey: " + key);
+        Log.i(TAG, "getDataFromKey: " + columnIndex);
+
         String ans ="";
 
         String selectQuery = "SELECT * FROM " + TABLENAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst()&&cursor!=null) {
             do { if(cursor.getInt(0)==key) {
                 ans = cursor.getString(columnIndex);
                 }
@@ -622,7 +640,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /*
     CREE UNE NOUVELLE FICHE ET RENVOIE SON IDENTIFIANT
      */
-    public int insertSheet(int ClientID, int SponsorID, String Date, long DiscountPrice, Boolean Paid) {
+    public int insertSheet(int ClientID, int SponsorID, String Date, long DiscountPrice, Boolean Paid, String note) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -632,6 +650,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COLUMN_SHEET_DATE, String.valueOf(Date));
         contentValues.put(COLUMN_SHEET_PRICE_DISCOUNT,DiscountPrice);
         contentValues.put(COLUMN_SHEET_PAID,Paid);
+        contentValues.put(COLUMN_SHEET_NOTES,note);
 
         db.insert(TABLE_SHEET,null,contentValues);
 

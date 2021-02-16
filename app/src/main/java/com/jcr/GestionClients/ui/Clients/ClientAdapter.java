@@ -40,7 +40,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
 
     @Override
     public SheetHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_item_group,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.cardview_client_group,parent,false);
         return new SheetHolder(view);
     }
 
@@ -48,17 +48,9 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
     public void onBindViewHolder(@NonNull SheetHolder holder, int position) {
         final Client client = list.get(position);
         if (FirstLetter != null && FirstLetter.equals(client.getName().substring(0,1).toUpperCase())) {
-            holder.euro.setVisibility(View.GONE);
-            holder.group.setVisibility(View.GONE);
-            holder.groupItem.setVisibility(View.GONE);
-            holder.price.setVisibility(View.GONE);
-            holder.subItemEuro.setVisibility(View.GONE);
+            holder.group.setVisibility(View.INVISIBLE);
         }else{
-            holder.euro.setVisibility(View.GONE);
             holder.group.setVisibility(View.VISIBLE);
-            holder.groupItem.setVisibility(View.GONE);
-            holder.price.setVisibility(View.GONE);
-            holder.subItemEuro.setVisibility(View.GONE);
             FirstLetter = client.getName().substring(0,1).toUpperCase();
             holder.group.setText(FirstLetter);
 
@@ -102,7 +94,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
 
     public static class SheetHolder extends  RecyclerView.ViewHolder {
 
-        TextView group, item, subItem, price, groupItem, euro,subItemEuro;
+        TextView group, item, subItem;
         CheckBox checkBox;
         CardView cardview;
 
@@ -111,12 +103,9 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
             group =itemView.findViewById(R.id.id_text_sheet_item_group);
             item =itemView.findViewById(R.id.id_text_sheet_item_mainItem);
             subItem =itemView.findViewById(R.id.id_text_sheet_item_subItem);
-            price=itemView.findViewById(R.id.id_text_sheet_item_price);
             checkBox=itemView.findViewById(R.id.id_check_sheet_item);
             cardview=itemView.findViewById(R.id.cardView);
-            groupItem = itemView.findViewById(R.id.id_text_sheet_groupItem);
-            euro = itemView.findViewById(R.id.id_text_euro);
-            subItemEuro = itemView.findViewById(R.id.id_text_sheet_item_euro);
+
         }
     }
 

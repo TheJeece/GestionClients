@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
+import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 import static com.jcr.GestionClients.ui.Prestations.CategoriesFragment.CatKey;
 
 public class PrestationsFragment extends Fragment {
@@ -66,9 +67,6 @@ public class PrestationsFragment extends Fragment {
         context = getContext();
         prestations = prestationsModel.getPrestations(context,CatKey);
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(prestationsModel.getCat(context, CatKey));
-
         return view;
 
     }
@@ -76,6 +74,8 @@ public class PrestationsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolBarLayout.setTitle(prestationsModel.getCat(context, CatKey));
 
         UpdateAdapter();
         setFab();

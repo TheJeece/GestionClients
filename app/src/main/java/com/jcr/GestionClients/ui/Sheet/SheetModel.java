@@ -21,10 +21,10 @@ public class SheetModel extends ViewModel {
     /*
     CREE UNE FICHE ET RENVOIE LA CLE CREE
      */
-    public int CreateSheet(Context context, int ClientID, int SponsorID, Date date, long DiscountPrice, boolean Paid){
+    public int CreateSheet(Context context, int ClientID, int SponsorID, Date date, long DiscountPrice, boolean Paid, String note){
         dbh = new DatabaseHandler(context);
         String sDate = simpleDateFormat.format(date);
-        return dbh.insertSheet(ClientID,SponsorID,sDate,DiscountPrice,Paid);
+        return dbh.insertSheet(ClientID,SponsorID,sDate,DiscountPrice,Paid,note);
     }
 
     /*
@@ -151,9 +151,11 @@ public class SheetModel extends ViewModel {
 
         long price = Long.parseLong(dbh.getDataFromKey(DatabaseHandler.tableSheet, id, DatabaseHandler.columnSheetPrice));
         Boolean isPaid = 1==Integer.parseInt(dbh.getDataFromKey(DatabaseHandler.tableSheet, id, DatabaseHandler.columnSheetIsPaid));
+        String note = dbh.getDataFromKey(DatabaseHandler.tableSheet,id,DatabaseHandler.columnSheetNotes);
+
         Boolean isSelected = false;
 
-        Sheet sheet = new Sheet(id, date, client, sponsor, sheetDetails, price, isPaid, isSelected);
+        Sheet sheet = new Sheet(id, date, client, sponsor, sheetDetails, price, isPaid, note, isSelected);
         return sheet;
     }
 

@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
+import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 
 
 public class CategoriesFragment extends Fragment {
@@ -60,6 +61,7 @@ public class CategoriesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -81,6 +83,8 @@ public class CategoriesFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolBarLayout.setTitle(getString(R.string.menu_Presta));
         UpdateCategories();
         UpdateAdapter();
         fabInit();

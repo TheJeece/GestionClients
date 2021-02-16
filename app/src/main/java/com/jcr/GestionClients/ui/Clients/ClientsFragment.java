@@ -38,6 +38,7 @@ import com.jcr.GestionClients.fabAnimate;
 
 import static android.view.View.VISIBLE;
 import static com.jcr.GestionClients.MainActivity.fab;
+import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 
 
 public class ClientsFragment extends Fragment {
@@ -63,6 +64,8 @@ public class ClientsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //Autorisation d'affichage du menu option (search, delete)
         setHasOptionsMenu(true);
+
+
     }
 
 
@@ -82,6 +85,8 @@ public class ClientsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolBarLayout.setTitle(getString(R.string.menu_Clients));
 
         //Mise à jour de la vue liste
         UpdateClients();

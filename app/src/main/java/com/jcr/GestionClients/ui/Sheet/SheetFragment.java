@@ -34,27 +34,25 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
+import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 
 public class SheetFragment extends Fragment {
 
-    SheetAdapter adapter;
-    RecyclerView recyclerView;
-    Context context;
-    SheetModel sheetModel;
-    static int sheetKey=-1;
-    boolean deleteActivated=false;
-    public String searchedString;
+    SheetAdapter    adapter;
+    RecyclerView    recyclerView;
+    Context         context;
+    SheetModel      sheetModel;
+    boolean         deleteActivated=false;
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    SearchManager searchManager;
+    SearchManager   searchManager;
+    public String   searchedString;
 
-    FloatingActionButton fabAdd;
-    FloatingActionButton fabDel;
+    List<Sheet>     listSheets;
+    List<Sheet>     filteredSheets;
 
-    List<Sheet> listSheets;
-    List<Sheet> filteredSheets;
-
+    static int      sheetKey=-1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +74,8 @@ public class SheetFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolBarLayout.setTitle(getString(R.string.menu_Sheet));
 
         fabInit();
 

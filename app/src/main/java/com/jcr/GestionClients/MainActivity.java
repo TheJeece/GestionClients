@@ -17,8 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    public static FloatingActionButton fab;
+    private AppBarConfiguration             mAppBarConfiguration;
+    public static FloatingActionButton      fab;
+    public static CollapsingToolbarLayout   toolBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //scrolling
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 //        toolBarLayout.setTitle(getTitle());
         //scrollin ***
 

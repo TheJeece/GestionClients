@@ -10,20 +10,23 @@ import java.util.Date;
 
 public class Client {
 
-    String name;
-    String phone;
-    String address;
-    String email;
-    Date bDay;
+    String  name;
+    String  phone;
+    String  address;
+    String  email;
+    String  note;
+    Date    bDay;
+
     boolean isSelected;
 
-    public Client(String name, String phone, String address, String email, Date bDay, boolean isSelected) {
+    public Client(String name, String phone, String address, String email, Date bDay, String note, boolean isSelected) {
 
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.email = email;
         this.bDay = bDay;
+        this.note = note;
         this.isSelected=isSelected;
     }
 
@@ -71,6 +74,14 @@ public class Client {
     }
     public boolean getSelected() {
         return isSelected ;
+    }
+
+    public void setNote(String note){
+        this.note=note;
+    }
+
+    public String getNote() {
+        return note;
     }
 
     public int getID(Context context) {

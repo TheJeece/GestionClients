@@ -6,14 +6,17 @@ import java.util.List;
 
 public class Sheet {
 
-    int ID;
-    Date date;
-    String name, sponsor;
-    long price;
-    Boolean isPaid,isSelected;
-    List<SheetDetail> sheetDetails;
+    int                 ID;
+    Date                date;
+    String              name;
+    String              sponsor;
+    String              note;
+    long                price;
+    Boolean             isPaid;
+    Boolean             isSelected;
+    List<SheetDetail>   sheetDetails;
 
-    public Sheet(int ID, Date date, String name, String sponsor, List<SheetDetail> sheetDetails, long price, boolean isPaid, boolean isSelected) {
+    public Sheet(int ID, Date date, String name, String sponsor, List<SheetDetail> sheetDetails, long price, boolean isPaid, String note, boolean isSelected) {
         this.ID = ID;
         this.date = date;
         this.name = name;
@@ -21,9 +24,8 @@ public class Sheet {
         this.sheetDetails = sheetDetails;
         this.price  =price;
         this.isPaid = isPaid;
-
+        this.note = note;
         this.isSelected=isSelected;
-
     }
 
     public int getID() {
@@ -58,25 +60,10 @@ public class Sheet {
         this.sponsor = sponsor;
     }
 
-//    public String getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(String category) {
-//        this.category = category;
-//    }
-//
-//    public String getPresta() {
-//        return presta;
-//    }
-//
-//    public void setPresta(String presta) {
-//        this.presta = presta;
-//    }
-
     public List<SheetDetail> getSheetDetails() {
         return sheetDetails;
     }
+
     public void setSheetDetails(List<SheetDetail> sheetDetails){
         this.sheetDetails=sheetDetails;
     }
@@ -90,10 +77,20 @@ public class Sheet {
     }
 
     public boolean isPaid() {
-        return isPaid;}
+        return isPaid;
+    }
 
     public void setPaid(boolean Paid) {
-        isPaid=Paid;}
+        isPaid=Paid;
+    }
+
+    public void setNote(String note) {
+        this.note=note;
+    }
+
+    public String getNote() {
+        return note;
+    }
 
     public boolean isSelected() {
         return isSelected;
@@ -102,6 +99,7 @@ public class Sheet {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
 
     /*
      * Comparator pour le tri des détails par date
@@ -112,4 +110,6 @@ public class Sheet {
             return Sheet2.getDate().compareTo(Sheet1.getDate());
         }
     };
+
+
 }

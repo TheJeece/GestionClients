@@ -72,6 +72,7 @@
     <string name="EditCat">Editer catégorie</string>
     <string name="CategoryAlreadyExists">Cette catégorie existe déjà</string>
     <string name="EditClient">Modifier le contact</string>
+    <string name="note">Notes</string>
 
     <!--Fiches clients-->
 

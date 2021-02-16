@@ -27,7 +27,7 @@
 
         <!--Components styles-->
         <item name="cardViewStyle">@style/Widget.Theme.GestionClients.CardView</item>
-
+        <item name="textInputStyle">@style/Widget.Theme.GestionClients.TextInputLayout</item>
 
         </style>
 

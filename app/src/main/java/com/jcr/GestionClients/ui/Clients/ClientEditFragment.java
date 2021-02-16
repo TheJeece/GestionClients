@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -47,37 +48,38 @@ public class ClientEditFragment extends Fragment {
     private ClientModel clientModel;
     private ClientImportModel cImport;
 
-    ProgressBar progressBar;
-    List phone, mail, address, bDay;
-    TextInputLayout tilName,tilPhone,tilAddress,tilMail,tilBday;
+    ProgressBar         progressBar;
+    List                phone, mail, address, bDay;
+    TextInputLayout     tilName,tilPhone,tilAddress,tilMail,tilBday;
     AutoCompleteTextView actvName, actvPhone, actvAddress, actvMail, actvBday;
-    Client client;
-    int importedClientID;
-    private int Year,Month, Day;
+    EditText            etNote;
+    Client              client;
+    int                 importedClientID;
+    private int         Year,Month, Day;
     List<List<String>> contactsList;
-    List<String> names;
-    Context context;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    List<String>        names;
+    Context             context;
+    SimpleDateFormat    simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        Toast.makeText(getContext(), "ClientKey = " + ClientID, Toast.LENGTH_SHORT).show();
+        clientModel     = new ViewModelProvider(this).get(ClientModel.class);
+        cImport         = new ViewModelProvider(this).get(ClientImportModel.class);
 
-        clientModel = new ViewModelProvider(this).get(ClientModel.class);
-        cImport = new ViewModelProvider(this).get(ClientImportModel.class);
         View view = inflater.inflate(R.layout.fragment_client_edit, container, false);
 
-        tilName = view.findViewById(R.id.id_til_client_name);
-        actvName = view.findViewById(R.id.id_actv_client_name);
-        actvPhone = view.findViewById(R.id.id_actv_client_phone);
-        actvMail = view.findViewById(R.id.id_actv_client_mail);
-        actvAddress = view.findViewById(R.id.id_actv_client_address);
-        actvBday = view.findViewById(R.id.id_actv_client_bday);
+        tilName         = view.findViewById(R.id.id_til_client_name);
+        actvName        = view.findViewById(R.id.id_actv_client_name);
+        actvPhone       = view.findViewById(R.id.id_actv_client_phone);
+        actvMail        = view.findViewById(R.id.id_actv_client_mail);
+        actvAddress     = view.findViewById(R.id.id_actv_client_address);
+        actvBday        = view.findViewById(R.id.id_actv_client_bday);
+        etNote          = view.findViewById(R.id.id_et_client_note);
 
-        client = new Client("","","","",null,false);
+        client = new Client("","","","",null,"",false);
 
         return view;
     }
@@ -145,6 +147,7 @@ public class ClientEditFragment extends Fragment {
                     clientModel.getAddress(getContext(), ClientID),
                     clientModel.getMail(getContext(), ClientID),
                     clientModel.getBday(getContext(), ClientID),
+                    clientModel.getNote(getContext(),ClientID),
                     false);
             actvName.setText(client.getName());
             setFields();
@@ -181,9 +184,14 @@ public class ClientEditFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClientID =-1;
-                addClient();
-                NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
+                if (ClientID !=-1) {
+                    editClient(ClientID);
+                    ClientID = -1;
+                } else {
+                    addClient();
+                }
+
+                    NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
             }
         });
     }
@@ -260,6 +268,38 @@ public class ClientEditFragment extends Fragment {
             }
         });
 
+        actvAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (ClientID!=-1 && !s.equals(client.getAddress())) {
+                    fabAnimate.showEdit();
+                }
+            }
+        });
+
+        actvMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (ClientID!=-1 && !s.equals(client.getEmail())) {
+                    fabAnimate.showEdit();
+                }
+            }
+        });
+
         //Méthode d'implémentation du datepicker
         actvBday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -289,8 +329,38 @@ public class ClientEditFragment extends Fragment {
             }
 
         });
-    }
+        actvBday.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (ClientID!=-1 && !s.equals(client.getbDay())) {
+                    fabAnimate.showEdit();
+                }
+            }
+        });
+
+        etNote.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (ClientID!=-1 && !s.equals(client.getNote())) {
+                    fabAnimate.showEdit();
+                }
+            }
+        });
+    }
 
     public boolean StringInContactsList(String name) {
         //Réinitialisation des noms de l'adapter
@@ -370,6 +440,8 @@ public class ClientEditFragment extends Fragment {
             actvBday.setText(simpleDateFormat.format(client.getbDay()));
         }
 
+        client.setNote(clientModel.getNote(context,ClientID));
+        etNote.setText(client.getNote());
 
     }
 
@@ -443,7 +515,6 @@ public class ClientEditFragment extends Fragment {
         actvBday.setAdapter(bDayAdapter);
     }
 
-
     public void addClient(){
         //Au clic, Récupération du contenu de la inputbox dans la variable label
         String name = actvName.getText().toString();
@@ -451,6 +522,7 @@ public class ClientEditFragment extends Fragment {
         String mail = actvMail.getText().toString();
         String address = actvAddress.getText().toString();
         String bday = actvBday.getText().toString();
+        String note = etNote.getText().toString();
 
         // Hiding the keyboard
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -459,7 +531,7 @@ public class ClientEditFragment extends Fragment {
         //si non vide
         if (!name.isEmpty() && !clientModel.clientExists(getActivity(),name)) {
             //Ouverture de la base db
-            clientModel.Add(getActivity().getApplicationContext(), name, phone, mail, address, bday);
+            clientModel.Add(getActivity().getApplicationContext(), name, phone, mail, address, bday, note);
 
             //Réinitialisation de l'imputbox
             actvName.setText("");
@@ -493,6 +565,7 @@ public class ClientEditFragment extends Fragment {
         clientModel.setAddress(getContext(),Key, actvAddress.getText().toString());
         clientModel.setMail(getContext(),Key, actvMail.getText().toString());
         clientModel.setBday(getContext(),Key, actvBday.getText().toString());
+        clientModel.setNote(getContext(),Key, etNote.getText().toString());
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_AddClient_to_Clients);
     }
 
