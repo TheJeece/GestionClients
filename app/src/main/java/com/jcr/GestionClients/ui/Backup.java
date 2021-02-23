@@ -64,7 +64,8 @@ public class Backup extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.fragment_import_export, container, false);
 
-         context = getContext();
+        context = getContext();
+
         dbName = context.getString(R.string.DBname);
         packageName = APPLICATION_ID;
         backupDirectory = context.getString(R.string.BackupDir);

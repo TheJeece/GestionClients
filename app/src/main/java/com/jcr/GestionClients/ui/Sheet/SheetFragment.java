@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,6 +79,8 @@ public class SheetFragment extends Fragment {
         toolBarLayout.setTitle(getString(R.string.menu_Sheet));
 
         fabInit();
+
+        Snackbar.make(view,"Test", Snackbar.LENGTH_LONG).show();
 
         UpdateSheet();
         UpdateFilteredSheets("");

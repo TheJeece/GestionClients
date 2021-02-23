@@ -1,8 +1,11 @@
 package com.jcr.GestionClients.ui.Clients;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -40,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static android.content.Context.ACTIVITY_SERVICE;
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.ui.Clients.ClientsFragment.ClientID;
 
@@ -48,7 +52,6 @@ public class ClientEditFragment extends Fragment {
     private ClientModel clientModel;
     private ClientImportModel cImport;
 
-    ProgressBar         progressBar;
     List                phone, mail, address, bDay;
     TextInputLayout     tilName,tilPhone,tilAddress,tilMail,tilBday;
     AutoCompleteTextView actvName, actvPhone, actvAddress, actvMail, actvBday;
@@ -56,7 +59,7 @@ public class ClientEditFragment extends Fragment {
     Client              client;
     int                 importedClientID;
     private int         Year,Month, Day;
-    List<List<String>> contactsList;
+    List<List<String>>  contactsList;
     List<String>        names;
     Context             context;
     SimpleDateFormat    simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -81,6 +84,8 @@ public class ClientEditFragment extends Fragment {
 
         client = new Client("","","","",null,"",false);
 
+        Snackbar snackbar=Snackbar.make(view, "OnCreate View",Snackbar.LENGTH_LONG);
+        snackbar.show();
         return view;
     }
 
@@ -89,11 +94,11 @@ public class ClientEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
 
-        //initialisation des champs
-        init();
-
         //initialisation des boutons
         fabInit();
+
+        //initialisation des champs
+        init(view);
 
         //Gestion du clic sur un espace vide
         view.setOnClickListener(
@@ -101,12 +106,15 @@ public class ClientEditFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     // Hiding the keyboard
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(actvName.getWindowToken(), 0);
+                    Keyboard.hide(getActivity(),view);
+//                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(actvName.getWindowToken(), 0);
                 }
             }
         );
+
         Keyboard.hide(getActivity(),getView());
+
         //initialisation des listeners sur les champs;
         listenersInit();
 
@@ -137,7 +145,7 @@ public class ClientEditFragment extends Fragment {
         }
     }
 
-    public void init(){
+    public void init(View view){
         //si client sélectionné
         if (ClientID != -1) {
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
@@ -154,24 +162,40 @@ public class ClientEditFragment extends Fragment {
         }
 
         //initialisation des contacts importés
-        if (cImport.HasPermission(context,getActivity())) {
+        if (cImport.HasPermission(context,view)) {
             contactsList = cImport.getContactList(context);
+            //initialisation des noms de l'adapter
+            setNames();
+
+            //initialisation des adapters
+            updateNamesAdapter();
+            updatePhonesAdapter();
+            updateMailsAdapter();
+            updateAddressesAdapter();
+            updateBdaysAdapter();
+        }else{
+
+            List<String> nameIDnull     = new ArrayList<>();
+            List<String> namenull       = new ArrayList<>();
+
+            nameIDnull.add("");
+            namenull.add("");
+
+            contactsList = new ArrayList<>();
+            contactsList.add(nameIDnull);
+            contactsList.add(namenull);
+
+
         }
 
-        //initialisation des noms de l'adapter
-        setNames();
 
-        //initialisation des adapters
-        updateNamesAdapter();
-        updatePhonesAdapter();
-        updateMailsAdapter();
-        updateAddressesAdapter();
-        updateBdaysAdapter();
 
         //Initialisation des champs
 
 
     }
+
+
 
     public void fabInit() {
         //fabADD

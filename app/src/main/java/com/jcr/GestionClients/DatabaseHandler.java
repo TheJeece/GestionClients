@@ -256,8 +256,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_ID,catID);
         values.put(COLUMN_CAT, category);
         values.put(COLUMN_CAT_IMAGE,byteImg);
-        Log.i(TAG, "setCatData: image set " + byteImg );
-        Log.i(TAG, "insertPrestaData: " + values);
+//        Log.i(TAG, "setCatData: image set " + byteImg );
+//        Log.i(TAG, "insertPrestaData: " + values);
 
         // Inserting Row
         db.update(TABLE_CAT,values,COLUMN_ID + " = " + catID,null);
@@ -402,9 +402,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public String getDataFromKey(String TABLENAME, int key, int columnIndex) {
 
-        Log.i(TAG, "getDataFromKey: " + TABLENAME);
-        Log.i(TAG, "getDataFromKey: " + key);
-        Log.i(TAG, "getDataFromKey: " + columnIndex);
+//        Log.i(TAG, "getDataFromKey: " + TABLENAME);
+//        Log.i(TAG, "getDataFromKey: " + key);
+//        Log.i(TAG, "getDataFromKey: " + columnIndex);
 
         String ans ="";
 
@@ -488,14 +488,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Bitmap image = null;
                 if (byteImg != null) {
                     image = BitmapFactory.decodeByteArray(byteImg, 0, byteImg.length);
-                    Log.i(TAG, "getCategory: image " + (byteImg == null));
+//                    Log.i(TAG, "getCategory: image " + (byteImg == null));
                 }
 
                 Category category = new Category(catID, name, image, false);
                 categories.add(category);
             }while(cursor.moveToNext());
         }
-        Log.i(TAG, "getCategories: List set");
+//        Log.i(TAG, "getCategories: List set");
         cursor.close();
         db.close();
         return categories;
@@ -511,17 +511,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             String name = cursor.getString(columnCategory);
             byte[] byteImg = cursor.getBlob(columnImage);
-            Log.i(TAG, "getCategory: image "+ (byteImg == null));
+//            Log.i(TAG, "getCategory: image "+ (byteImg == null));
             Bitmap image = null;
             if (byteImg != null) {
                 image = BitmapFactory.decodeByteArray(byteImg, 0, byteImg.length);
-                Log.i(TAG, "getCategory: image " + (byteImg == null));
+//                Log.i(TAG, "getCategory: image " + (byteImg == null));
             }
             category = new Category(catID, name, image, false);
 
 
         }
-        Log.i(TAG, "getCategory: cat set");
+//        Log.i(TAG, "getCategory: cat set");
         cursor.close();
         db.close();
         return category;

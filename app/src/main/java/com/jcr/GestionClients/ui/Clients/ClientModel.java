@@ -145,11 +145,11 @@ public class ClientModel extends ViewModel {
         dbh = new DatabaseHandler(context);
         List<Client> clients = new ArrayList<Client>();
         List idList = dbh.getListFromTable(DatabaseHandler.tableContacts,0);
-        Log.i(TAG, "getClients: "+idList);
+//        Log.i(TAG, "getClients: "+idList);
         int ID = 0;
         for (int i =0; i<idList.size();i++) {
             ID = Integer.parseInt(idList.get(i).toString());
-            Log.i(TAG, "getClients: ID = "+ID);
+//            Log.i(TAG, "getClients: ID = "+ID);
 
             clients.add(getClient(context,ID));
         }
@@ -158,11 +158,11 @@ public class ClientModel extends ViewModel {
 
     public List<List<String>> importContactList(Context context) {
 
-        Log.i(TAG, "Récupération des contacts");
+//        Log.i(TAG, "Récupération des contacts");
         Cursor cContact =context.getContentResolver().query(
                 ContactsContract.Contacts.CONTENT_URI, null, null,null,
                 ContactsContract.Contacts.DISPLAY_NAME+" ASC");
-        Log.i(TAG, "taille du curseur cContact : " + cContact.getCount());
+//        Log.i(TAG, "taille du curseur cContact : " + cContact.getCount());
 
         List namesIDs= new ArrayList();
         List names = new ArrayList();

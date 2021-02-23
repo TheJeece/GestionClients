@@ -1,7 +1,9 @@
 package com.jcr.GestionClients.ui.Clients;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,35 +47,33 @@ public class ClientsFragment extends Fragment {
 
     String TAG = "Clients";
     private ClientModel clientModel;
-    ClientAdapter adapter;
-    RecyclerView recyclerView;
+    private ClientImportModel cImport;
+    ClientAdapter       adapter;
+    RecyclerView        recyclerView;
 
-    static int ClientID =-1;
-    Context context;
-    private SearchView searchView = null;
+    static int          ClientID =-1;
+    Context             context;
+    private SearchView  searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    SearchManager searchManager;
-    public String searchedString;
-    ProgressBar progressBar;
-    boolean deleteActivated=false;
-    List<Client> clients;
-    List<Client> filteredClients;
+    SearchManager       searchManager;
+    public String       searchedString;
+    boolean             deleteActivated=false;
+    List<Client>        clients;
+    List<Client>        filteredClients;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Autorisation d'affichage du menu option (search, delete)
         setHasOptionsMenu(true);
-
-
     }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // ClientModelgère la communication avec la database
-        clientModel = new ViewModelProvider(this).get(ClientModel.class);
-
+        clientModel     = new ViewModelProvider(this).get(ClientModel.class);
+        cImport         = new ViewModelProvider(this).get(ClientImportModel.class);
         //Création de la vue
         View view = inflater.inflate(R.layout.fragment_client, container, false);
         recyclerView = view.findViewById(R.id.RecyclerView);
@@ -104,9 +104,16 @@ public class ClientsFragment extends Fragment {
             public void onClick(View view) {
                 if (!deleteActivated) {
                     ClientID =-1;
+                    if(cImport.HasPermission(context,view)){
+
+                    } else {
+                        cImport.requestPermission(getActivity());
+//                        ConfirmDialogBox();
+                    }
                     NavHostFragment
                             .findNavController(ClientsFragment.this)
                             .navigate(R.id.action_nav_Clients_to_EditClient);
+
                 } else {
                     delClient();
                     UpdateClients();
@@ -116,6 +123,30 @@ public class ClientsFragment extends Fragment {
 
             }
         });
+    }
+
+    public void ConfirmDialogBox (){
+
+        Log.i(TAG, "ConfirmDialogBox: ");
+        AlertDialog alertDialog =new AlertDialog.Builder(context).create();
+        alertDialog.setTitle("Autorisation requise");
+        alertDialog.setMessage("L'autorisation des lecture des contacts est requise pour importer des contacts du répertoire");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Autoriser", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cImport.requestPermission(getActivity());
+                Toast.makeText(context, "Autoriser", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Refuser", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context, "Refuser", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     /*
@@ -160,10 +191,10 @@ public class ClientsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void delClient (){
         for (int i=0;i<clients.size();i++) {
-            Log.i(TAG, "delClient: " + clients.get(i).getName() + "  " + clients.get(i).isSelected);
+//            Log.i(TAG, "delClient: " + clients.get(i).getName() + "  " + clients.get(i).isSelected);
 
             if (clients.get(i).isSelected) {
-                Log.i(TAG, "delClient: "+ clients.get(i).getName());
+//                Log.i(TAG, "delClient: "+ clients.get(i).getName());
                 clientModel.delete(context, clientModel.getKey(context, clients.get(i).getName()));
             }
         }
@@ -215,14 +246,14 @@ public class ClientsFragment extends Fragment {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    Log.i("onQueryTextChange", newText);
+//                    Log.i("onQueryTextChange", newText);
                     UpdateFilteredClients(newText);
                     UpdateAdapter();
                     return true;
                 }
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    Log.i("onQueryTextSubmit", query);
+//                    Log.i("onQueryTextSubmit", query);
                     searchedString = query;
                     return false;
                 }
