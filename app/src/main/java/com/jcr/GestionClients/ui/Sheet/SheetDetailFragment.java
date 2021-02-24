@@ -170,6 +170,7 @@ public class SheetDetailFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabAnimate.validate();
                 hideKeyboard();
                 if (sheetIsValid()) {
                     if (sheetKey == -1) {

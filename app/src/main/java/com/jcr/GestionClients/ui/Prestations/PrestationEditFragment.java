@@ -88,7 +88,7 @@ public class PrestationEditFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fabAnimate.validate();
                 if (PrestaKey == -1) {
                     addPresta();
                 } else {

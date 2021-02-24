@@ -96,6 +96,7 @@ public class CategoriesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabAnimate.validate();
                 if (deleteActivated) {
                     delCat();
                 }else {
