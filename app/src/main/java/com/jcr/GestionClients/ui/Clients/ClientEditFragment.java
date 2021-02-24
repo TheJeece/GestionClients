@@ -208,6 +208,7 @@ public class ClientEditFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabAnimate.validate();
                 if (ClientID !=-1) {
                     editClient(ClientID);
                     ClientID = -1;

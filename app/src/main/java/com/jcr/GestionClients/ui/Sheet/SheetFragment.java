@@ -80,8 +80,6 @@ public class SheetFragment extends Fragment {
 
         fabInit();
 
-        Snackbar.make(view,"Test", Snackbar.LENGTH_LONG).show();
-
         UpdateSheet();
         UpdateFilteredSheets("");
         UpdateAdapter();
@@ -129,6 +127,8 @@ public class SheetFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fabAnimate.validate();
+
                 Toast.makeText(context, "test",Toast.LENGTH_SHORT).show();
                 if (deleteActivated) {
                     delSheet();

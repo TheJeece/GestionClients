@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.jcr.GestionClients.ui.Sheet.SheetFragment">
+    tools:context="com.jcr.GestionClients.ui.Sheet.SheetFragment"
+    android:id="@+id/fragment_sheet_layout">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/id_recyclerView_Sheet"

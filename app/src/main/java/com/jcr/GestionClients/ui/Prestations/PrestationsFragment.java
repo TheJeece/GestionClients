@@ -122,6 +122,7 @@ public class PrestationsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabAnimate.validate();
                 if (!deleteActivated) {
                     PrestaKey = -1;
                     NavHostFragment

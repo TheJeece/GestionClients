@@ -1,7 +1,9 @@
 package com.jcr.GestionClients.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,9 +27,12 @@ import android.content.res.Resources;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.jcr.GestionClients.R;
+import com.jcr.GestionClients.fabAnimate;
 
 import static com.jcr.GestionClients.BuildConfig.APPLICATION_ID;
 
@@ -35,11 +40,8 @@ public class Backup extends Fragment {
     Context context;
 
     String dbName;
-//    String dbName = "dbGestionClients";
     String packageName;
-//    String packageName = "com.jcr.GestionClients";
     String backupDirectory;
-//    String backupDirectory = "/GestionClients/";
     String TAG="Backup";
     
     @Override
@@ -47,17 +49,25 @@ public class Backup extends Fragment {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         //creating a new folder for the database to be backuped to
-        Log.i(TAG, "onCreateView: created");
-        File direct = new File(Environment.getExternalStorageDirectory() + "/Exam Creator");
-        Log.i(TAG, "onCreate: " + direct.toString());
-        if (!direct.exists()) {
-            if (direct.mkdir()) {
-                //directory is created;
-            }
-        }
-//        exportDB();
-//        importDB();
 
+        fabAnimate.hide();
+
+        Log.i(TAG, "onCreateView: created");
+
+        /*
+        Vérification de permission
+         */
+
+            int     writeCheck = ContextCompat.checkSelfPermission(getActivity().getBaseContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            boolean ret;
+
+            if (writeCheck != PackageManager.PERMISSION_GRANTED ) {
+                int     WRITE_EXTERNAL = 1;
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        WRITE_EXTERNAL);
+            }
     }
 
     @Override

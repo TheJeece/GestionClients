@@ -40,20 +40,20 @@ public class fabAnimate {
 
     public static void hide(){
         fab.animate()
-                .setDuration(100)
+                .setDuration(200)
                 .translationY(300)
                 .start();
     }
 
     private static void show(int drawableId) {
 
-        fab.setImageResource(drawableId);
         fab.animate()
                 .setDuration(200)
                 .translationY(300)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
+                        fab.setImageResource(drawableId);
                         fab.animate()
                                 .setDuration(200)
                                 .translationY(-50)
@@ -79,6 +79,7 @@ public class fabAnimate {
     public static void changeToAdd(){
         rotateInflate(R.drawable.ic_add);
     }
+
     public static void rotateInflate(int drawableId){
         fab.animate()
                 .rotationBy(180)

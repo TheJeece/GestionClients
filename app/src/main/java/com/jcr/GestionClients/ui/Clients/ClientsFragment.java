@@ -102,17 +102,18 @@ public class ClientsFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
+                fabAnimate.validate();
                 if (!deleteActivated) {
                     ClientID =-1;
                     if(cImport.HasPermission(context,view)){
-
+                        NavHostFragment
+                                .findNavController(ClientsFragment.this)
+                                .navigate(R.id.action_nav_Clients_to_EditClient);
                     } else {
-                        cImport.requestPermission(getActivity());
-//                        ConfirmDialogBox();
+//                        cImport.requestPermission(getActivity());
+                        ConfirmDialogBox();
                     }
-                    NavHostFragment
-                            .findNavController(ClientsFragment.this)
-                            .navigate(R.id.action_nav_Clients_to_EditClient);
+
 
                 } else {
                     delClient();
@@ -134,19 +135,33 @@ public class ClientsFragment extends Fragment {
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Autoriser", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context,  String.valueOf(which), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
                 cImport.requestPermission(getActivity());
-                Toast.makeText(context, "Autoriser", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context, String.valueOf(which), Toast.LENGTH_SHORT).show();
+
                 dialog.dismiss();
             }
         });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Refuser", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continuer sans autoriser", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context, "Refuser", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,  String.valueOf(which), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+
+                NavHostFragment
+                        .findNavController(ClientsFragment.this)
+                        .navigate(R.id.action_nav_Clients_to_EditClient);
             }
         });
         alertDialog.show();
+
     }
 
     /*
