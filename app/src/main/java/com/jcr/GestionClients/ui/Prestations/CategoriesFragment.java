@@ -3,7 +3,6 @@ package com.jcr.GestionClients.ui.Prestations;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,9 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,16 +21,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.jcr.GestionClients.fabAnimate;
 
 import java.util.ArrayList;
@@ -42,11 +35,14 @@ import java.util.List;
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+
 
 public class CategoriesFragment extends Fragment {
 
 //    List categories = new ArrayList<>();
-    public static int CatKey;
     private PrestationsModel prestationsModel;
     private ListView listview;
     private CheckBox check;
@@ -72,7 +68,7 @@ public class CategoriesFragment extends Fragment {
         context=getContext();
 
         prestationsModel = new ViewModelProvider(this).get(PrestationsModel.class);
-        CatKey=-1;
+        CAT_ID =-1;
 
 
 

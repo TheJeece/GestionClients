@@ -15,6 +15,11 @@ import com.jcr.GestionClients.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
+
 public class SheetDetailAdapter extends RecyclerView.Adapter<SheetDetailAdapter.SheetHolder> {
 
     Context context;

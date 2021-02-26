@@ -3,7 +3,6 @@ package com.jcr.GestionClients.ui.Prestations;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,14 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -27,15 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jcr.GestionClients.fabAnimate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.toolBarLayout;
-import static com.jcr.GestionClients.ui.Prestations.CategoriesFragment.CatKey;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class PrestationsFragment extends Fragment {
 
@@ -47,7 +41,6 @@ public class PrestationsFragment extends Fragment {
 
     String          TAG = "PrestationFragment";
     Context         context;
-    public static int PrestaKey;
     private PrestationsModel prestationsModel;
 
     @Override
@@ -65,7 +58,7 @@ public class PrestationsFragment extends Fragment {
         prestationsModel = new ViewModelProvider(this).get(PrestationsModel.class);
 
         context = getContext();
-        prestations = prestationsModel.getPrestations(context,CatKey);
+        prestations = prestationsModel.getPrestations(context, CAT_ID);
 
         return view;
 
@@ -75,7 +68,7 @@ public class PrestationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolBarLayout.setTitle(prestationsModel.getCat(context, CatKey));
+        toolBarLayout.setTitle(prestationsModel.getCat(context, CAT_ID));
 
         UpdateAdapter();
         setFab();
@@ -124,7 +117,7 @@ public class PrestationsFragment extends Fragment {
             public void onClick(View view) {
                 fabAnimate.validate();
                 if (!deleteActivated) {
-                    PrestaKey = -1;
+                    PRESTA_ID = -1;
                     NavHostFragment
                             .findNavController(PrestationsFragment.this)
                             .navigate(R.id.action_nav_ListePrestations_to_nav_EditPresta);
@@ -142,7 +135,7 @@ public class PrestationsFragment extends Fragment {
                 UpdateAdapter();
             }
         }
-        prestations = prestationsModel.getPrestations(context,CatKey);
+        prestations = prestationsModel.getPrestations(context, CAT_ID);
     }
 
     public void UpdateAdapter(){

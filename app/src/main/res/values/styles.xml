@@ -3,7 +3,9 @@
     <!-- components -->
     <style name="Widget.Theme.GestionClients.CardView" parent="CardView">
         <item name="cardBackgroundColor">?attr/colorSurface</item>
-
+        <item name="android:clickable">true</item>
+        <!-- <item name="android:focusableInTouchMode">true</item> -->
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
 
     </style>
 

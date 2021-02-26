@@ -1,8 +1,6 @@
 package com.jcr.GestionClients.ui.Clients;
 
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +9,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jcr.GestionClients.DatabaseHandler;
 import com.jcr.GestionClients.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolder> {
 
@@ -65,7 +63,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
                 public void onClick(View v) {
 
                     ClientModel clientModel = new ClientModel();
-                    ClientsFragment.ClientID = clientModel.getKey(context, client.name);
+                    CLIENT_ID = clientModel.getKey(context, client.name);
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_nav_Clients_to_EditClient);
                 }

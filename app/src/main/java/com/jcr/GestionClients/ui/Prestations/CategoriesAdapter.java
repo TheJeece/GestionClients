@@ -1,46 +1,26 @@
 package com.jcr.GestionClients.ui.Prestations;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.jcr.GestionClients.R;
-import com.jcr.GestionClients.ui.Sheet.Sheet;
-import com.jcr.GestionClients.ui.Sheet.SheetFragment;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
-import java.util.Date;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-import static com.jcr.GestionClients.ui.Prestations.CategoriesFragment.CatKey;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CatHolder> {
 
@@ -89,7 +69,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CatKey = category.getId();
+                CAT_ID = category.getId();
                 if (!deleteActivated) {
                     NavController navController = Navigation.findNavController(v);
                     navController.navigate(R.id.action_nav_ListeCategories_to_nav_ListePrestations);

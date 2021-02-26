@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
@@ -8,263 +9,286 @@
     android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/id_cv_Category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:padding="2dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="0dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/id_cv_Category"
-                style="outl"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:padding="8dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_date"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Date"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ic_calendar"
+                    tools:layout_editor_absoluteX="8dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_date"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/id_et_sheet_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Date"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:startIconDrawable="@drawable/ic_calendar"
-                        tools:layout_editor_absoluteX="8dp">
+                        android:inputType="date" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_et_sheet_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="date" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ClientName"
+                    app:endIconMode="dropdown_menu"
+                    app:layout_constraintTop_toBottomOf="@id/id_til_sheet_date"
+                    app:startIconDrawable="@drawable/ic_contact"
+                    tools:layout_editor_absoluteX="8dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_name"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    <AutoCompleteTextView
+                        android:id="@+id/id_actv_sheet_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_sponsor"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/SponsorName"
+                    app:endIconMode="dropdown_menu"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_name"
+                    app:startIconDrawable="@drawable/ic_sponsor"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/id_actv_sheet_sponsor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/ClientName"
-                        app:endIconMode="dropdown_menu"
-                        app:layout_constraintTop_toBottomOf="@id/id_til_sheet_date"
-                        app:startIconDrawable="@drawable/ic_contact"
-                        tools:layout_editor_absoluteX="8dp">
+                        android:inputType="textPersonName" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <AutoCompleteTextView
-                            android:id="@+id/id_actv_sheet_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_cat"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Categorie"
+                    app:endIconMode="dropdown_menu"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_sponsor"
+                    app:startIconDrawable="@drawable/ic_list"
+                    tools:layout_editor_absoluteX="101dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_sponsor"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/id_actv_sheet_cat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_presta"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Prestation"
+                    app:endIconMode="dropdown_menu"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_cat"
+                    app:startIconDrawable="@drawable/ic_presta"
+                    tools:layout_editor_absoluteX="101dp">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/id_actv_sheet_presta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_calc"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/CalcPrice"
+                    app:endIconMode="none"
+                    app:layout_constraintTop_toBottomOf="@+id/id_cv_sheet_presta"
+                    app:startIconDrawable="@drawable/ic_calc"
+                    app:suffixText=" €"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/id_et_sheet_calc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/SponsorName"
-                        app:endIconMode="dropdown_menu"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_name"
-                        app:startIconDrawable="@drawable/ic_sponsor"
-                        tools:layout_editor_absoluteX="8dp">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/id_actv_sheet_sponsor"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_cat"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Categorie"
-                        app:endIconMode="dropdown_menu"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_sponsor"
-                        app:startIconDrawable="@drawable/ic_list"
-                        tools:layout_editor_absoluteX="101dp">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/id_actv_sheet_cat"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_presta"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Prestation"
-                        app:endIconMode="dropdown_menu"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_cat"
-                        app:startIconDrawable="@drawable/ic_presta"
-                        tools:layout_editor_absoluteX="101dp">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/id_actv_sheet_presta"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_calc"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:hint="@string/CalcPrice"
-                        app:endIconMode="none"
-                        app:layout_constraintTop_toBottomOf="@+id/id_cv_sheet_presta"
-                        app:startIconDrawable="@drawable/ic_calc"
-                        app:suffixText=" €"
-                        tools:layout_editor_absoluteX="8dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_et_sheet_calc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:editable="false"
-                            android:focusable="false"
-                            android:gravity="end" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_price"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/DiscountPrice"
-                        app:endIconMode="none"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_calc"
-                        app:startIconDrawable="@drawable/ic_euro"
-                        app:suffixText=" €"
-                        tools:layout_editor_absoluteX="8dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_et_sheet_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:inputType="number"
-                            android:numeric="decimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_paid"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
+                        android:clickable="false"
+                        android:editable="false"
                         android:focusable="false"
-                        android:hint="@string/PaidSheet"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_price"
-                        app:startIconDrawable="@drawable/ic_sale"
-                        tools:layout_editor_absoluteX="8dp">
+                        android:gravity="end" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:editable="false"
-                            android:focusable="false" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_price"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/DiscountPrice"
+                    app:endIconMode="none"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_calc"
+                    app:startIconDrawable="@drawable/ic_euro"
+                    app:suffixText=" €"
+                    tools:layout_editor_absoluteX="8dp">
 
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Switch
-                        android:id="@+id/id_switch_sheet_paid"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:checked="true"
-                        android:gravity="center_vertical"
-                        app:layout_constraintBottom_toBottomOf="@+id/id_til_sheet_paid"
-                        app:layout_constraintEnd_toEndOf="@+id/id_til_sheet_paid"
-                        app:layout_constraintTop_toTopOf="@+id/id_til_sheet_paid" />
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/id_cv_sheet_presta"
-                        style="@style/Widget.MaterialComponents.CardView"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/id_et_sheet_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="true"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_presta"
-                        tools:layout_editor_absoluteX="19dp">
+                        android:gravity="end"
+                        android:inputType="number"
+                        android:numeric="decimal" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_paid"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:focusable="false"
+                    android:hint="@string/PaidSheet"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_price"
+                    app:startIconDrawable="@drawable/ic_sale"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:focusable="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Switch
+                    android:id="@+id/id_switch_sheet_paid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:checked="true"
+                    android:gravity="center_vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/id_til_sheet_paid"
+                    app:layout_constraintEnd_toEndOf="@+id/id_til_sheet_paid"
+                    app:layout_constraintTop_toTopOf="@+id/id_til_sheet_paid" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/id_cv_sheet_presta"
+                    style="@style/Widget.MaterialComponents.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardMaxElevation="0dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_presta"
+                    app:strokeColor="?android:attr/colorEdgeEffect"
+                    app:strokeWidth="1dp"
+                    tools:layout_editor_absoluteX="19dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="100dp">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:minHeight="100dp">
+                            android:background="?attr/colorPrimarySurface"
+                            android:padding="@dimen/padding"
+                            android:text="Liste des prestations"
+                            android:textColor="?attr/colorOnPrimarySurface"
+                            android:textSize="@dimen/Text_size"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageButton
-                                android:id="@+id/id_btn_sheet_add"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_add_list"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                        <ImageButton
+                            android:id="@+id/id_btn_sheet_add"
+                            style="@android:style/Widget.Material.ImageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding"
+                            android:src="@drawable/ic_add_list"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                            app:layout_constraintEnd_toStartOf="@+id/id_btn_sheet_del"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageButton
-                                android:id="@+id/id_btn_sheet_del"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_dell_list"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/id_btn_sheet_add" />
+                        <ImageButton
+                            android:id="@+id/id_btn_sheet_del"
+                            style="@android:style/Widget.Material.ImageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding"
+                            android:src="@drawable/ic_dell_list"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView2" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/id_rv_sheet_presta"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:padding="4dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/id_btn_sheet_del"
-                                app:layout_constraintTop_toTopOf="parent">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/id_rv_sheet_presta"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin"
+                            android:padding="4dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-                            </androidx.recyclerview.widget.RecyclerView>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.recyclerview.widget.RecyclerView>
 
-                    </androidx.cardview.widget.CardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/id_til_sheet_note"
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/id_til_sheet_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/note"
+                    app:layout_constraintEnd_toEndOf="@+id/id_til_sheet_paid"
+                    app:layout_constraintStart_toStartOf="@+id/id_til_sheet_paid"
+                    app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_paid"
+                    app:startIconDrawable="@drawable/ic_note">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/id_et_sheet_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/note"
-                        app:layout_constraintEnd_toEndOf="@+id/id_til_sheet_paid"
-                        app:layout_constraintStart_toStartOf="@+id/id_til_sheet_paid"
-                        app:layout_constraintTop_toBottomOf="@+id/id_til_sheet_paid"
-                        app:startIconDrawable="@drawable/ic_note">
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_et_sheet_note"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/note"
-                            android:inputType="textMultiLine" />
-                    </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
     </androidx.core.widget.NestedScrollView>

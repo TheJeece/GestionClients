@@ -17,9 +17,14 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration             mAppBarConfiguration;
-    public static FloatingActionButton      fab;
-    public static CollapsingToolbarLayout   toolBarLayout;
+    private         AppBarConfiguration         mAppBarConfiguration;
+    public static   FloatingActionButton        fab;
+    public static   CollapsingToolbarLayout     toolBarLayout;
+    public static   int                         SHEET_ID =-1;
+    public static   int                         CLIENT_ID=-1;
+    public static   int                         CAT_ID=-1;
+    public static   int                         PRESTA_ID=-1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,8 @@
 package com.jcr.GestionClients.ui.Clients;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,30 +19,34 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jcr.GestionClients.fabAnimate;
+import com.jcr.GestionClients.ui.Sheet.Sheet;
+import com.jcr.GestionClients.ui.Sheet.SheetModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static android.content.Context.ACTIVITY_SERVICE;
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.ui.Clients.ClientsFragment.ClientID;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 public class ClientEditFragment extends Fragment {
     private static final String TAG = "EDIT";
@@ -63,6 +64,10 @@ public class ClientEditFragment extends Fragment {
     List<String>        names;
     Context             context;
     SimpleDateFormat    simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    RecyclerView        recyclerView;
+    TextView            textView;
+    CardView            cardView;
+    SheetModel          sheetModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,11 +86,13 @@ public class ClientEditFragment extends Fragment {
         actvAddress     = view.findViewById(R.id.id_actv_client_address);
         actvBday        = view.findViewById(R.id.id_actv_client_bday);
         etNote          = view.findViewById(R.id.id_et_client_note);
+        recyclerView    = view.findViewById(R.id.id_rv);
+        cardView        = view.findViewById(R.id.id_cv_presta);
+        textView        = view.findViewById(R.id.id_tv_presta);
 
         client = new Client("","","","",null,"",false);
 
-        Snackbar snackbar=Snackbar.make(view, "OnCreate View",Snackbar.LENGTH_LONG);
-        snackbar.show();
+
         return view;
     }
 
@@ -96,6 +103,8 @@ public class ClientEditFragment extends Fragment {
 
         //initialisation des boutons
         fabInit();
+
+        sheetModel = new ViewModelProvider(this).get(SheetModel.class);
 
         //initialisation des champs
         init(view);
@@ -124,7 +133,7 @@ public class ClientEditFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //affichage du contenu du menu
         inflater.inflate(R.menu.tool_menu_edit_client, menu);
-        if (ClientID ==-1) {
+        if (CLIENT_ID ==-1) {
             menu.findItem(R.id.id_delete).setVisible(false);
             menu.findItem(R.id.id_import).setVisible(false);
         } else {
@@ -147,22 +156,30 @@ public class ClientEditFragment extends Fragment {
 
     public void init(View view){
         //si client sélectionné
-        if (ClientID != -1) {
+        if (CLIENT_ID != -1) {
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
             toolbar.setTitle(getString(R.string.EditClient));
-            client = new Client(clientModel.getName(context, ClientID),
-                    clientModel.getPhone(getContext(), ClientID),
-                    clientModel.getAddress(getContext(), ClientID),
-                    clientModel.getMail(getContext(), ClientID),
-                    clientModel.getBday(getContext(), ClientID),
-                    clientModel.getNote(getContext(),ClientID),
+            client = new Client(clientModel.getName(context, CLIENT_ID),
+                    clientModel.getPhone(getContext(), CLIENT_ID),
+                    clientModel.getAddress(getContext(), CLIENT_ID),
+                    clientModel.getMail(getContext(), CLIENT_ID),
+                    clientModel.getBday(getContext(), CLIENT_ID),
+                    clientModel.getNote(getContext(), CLIENT_ID),
                     false);
             actvName.setText(client.getName());
             setFields();
+            textView.setVisibility(View.VISIBLE);
+            cardView.setVisibility(View.VISIBLE);
+
+            setPrestaAdapter();
+
+        }   else {
+            textView.setVisibility(View.GONE);
+            cardView.setVisibility(View.GONE);
         }
 
         //initialisation des contacts importés
-        if (cImport.HasPermission(context,view)) {
+        if (cImport.HasPermission(context)) {
             contactsList = cImport.getContactList(context);
             //initialisation des noms de l'adapter
             setNames();
@@ -188,10 +205,26 @@ public class ClientEditFragment extends Fragment {
 
         }
 
+    }
 
+    public void setPrestaAdapter() {
+        List<Sheet> sheets = sheetModel.getSheets(context);
+        List<Sheet> clientSheets = new ArrayList<>();
 
-        //Initialisation des champs
+        if (sheets!=null) {
+            for (int i = 0;i<sheets.size();i++) {
+                if (sheets.get(i).getName().equals(client.getName())) {
+                    clientSheets.add(sheets.get(i));
+                }
+            }
+            RecyclerView.Adapter adapter=new ClientEditAdapter(context, clientSheets);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+        } else {
+            textView.setText("Aucune prestation enregistrée");
+            recyclerView.setVisibility(View.GONE);
+        }
 
     }
 
@@ -200,7 +233,7 @@ public class ClientEditFragment extends Fragment {
     public void fabInit() {
         //fabADD
 //        fabAdd = view.findViewById(R.id.fabAdd);
-        if (ClientID ==-1) {
+        if (CLIENT_ID ==-1) {
             fabAnimate.showAdd();
         }else {
             fabAnimate.hide();
@@ -209,9 +242,9 @@ public class ClientEditFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 fabAnimate.validate();
-                if (ClientID !=-1) {
-                    editClient(ClientID);
-                    ClientID = -1;
+                if (CLIENT_ID !=-1) {
+                    editClient(CLIENT_ID);
+                    CLIENT_ID = -1;
                 } else {
                     addClient();
                 }
@@ -244,7 +277,7 @@ public class ClientEditFragment extends Fragment {
                     // tous champs identiques pour suppression
 
                     //si l'entrée est à modifier
-                }else if (ClientID !=-1) {
+                }else if (CLIENT_ID !=-1) {
                     fabAnimate.showEdit();
 
                 // si l'entrée est n'est pas dans la bdd est est une partie d'un nom du répertorire
@@ -270,7 +303,7 @@ public class ClientEditFragment extends Fragment {
                     //Vérifier que l'utilisateur veux changer le nom des clients
                     //Attentions aux fiches contenant ce nom, le nom du client des fiches sera également modifié
                     tilName.setHelperText(getString(R.string.NameExists));
-                    ClientID = client.getID(context);
+                    CLIENT_ID = client.getID(context);
                     setFields();
                     fabAnimate.showEdit();
 
@@ -303,7 +336,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (ClientID!=-1 && !s.equals(client.getAddress())) {
+                if (CLIENT_ID !=-1 && !s.equals(client.getAddress())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -319,7 +352,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (ClientID!=-1 && !s.equals(client.getEmail())) {
+                if (CLIENT_ID !=-1 && !s.equals(client.getEmail())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -364,7 +397,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (ClientID!=-1 && !s.equals(client.getbDay())) {
+                if (CLIENT_ID !=-1 && !s.equals(client.getbDay())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -380,7 +413,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (ClientID!=-1 && !s.equals(client.getNote())) {
+                if (CLIENT_ID !=-1 && !s.equals(client.getNote())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -449,23 +482,23 @@ public class ClientEditFragment extends Fragment {
     }
 
     public void setFields () {
-        client.setPhone(clientModel.getPhone(context, ClientID));
+        client.setPhone(clientModel.getPhone(context, CLIENT_ID));
         actvPhone.setText(client.getPhone());
 
-        client.setAddress(clientModel.getAddress(context,ClientID));
+        client.setAddress(clientModel.getAddress(context, CLIENT_ID));
         actvAddress.setText(client.getAddress());
 
-        client.setEmail(clientModel.getMail(context,ClientID));
+        client.setEmail(clientModel.getMail(context, CLIENT_ID));
         actvMail.setText(client.getEmail());
 
-        client.setbDay(clientModel.getBday(context,ClientID));
+        client.setbDay(clientModel.getBday(context, CLIENT_ID));
         if (client.getbDay()==null) {
             actvBday.setText("");
         }else {
             actvBday.setText(simpleDateFormat.format(client.getbDay()));
         }
 
-        client.setNote(clientModel.getNote(context,ClientID));
+        client.setNote(clientModel.getNote(context, CLIENT_ID));
         etNote.setText(client.getNote());
 
     }
@@ -566,7 +599,7 @@ public class ClientEditFragment extends Fragment {
             actvBday.setText("");
 
             //Confirmation
-            ClientID = -1;
+            CLIENT_ID = -1;
 
             Snackbar.make(getView(), "Ajouté", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

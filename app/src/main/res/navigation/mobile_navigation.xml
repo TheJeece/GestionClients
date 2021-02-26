@@ -122,6 +122,9 @@
             app:destination="@id/nav_Clients"
             app:enterAnim="@anim/open_from_left"
             app:exitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_AddClient_to_nav_SheetAdd"
+            app:destination="@id/nav_SheetAdd" />
     </fragment>
 
     <fragment

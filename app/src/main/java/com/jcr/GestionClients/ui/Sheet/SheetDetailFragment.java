@@ -31,13 +31,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -49,7 +47,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.ui.Sheet.SheetFragment.sheetKey;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 
 public class SheetDetailFragment extends Fragment {
@@ -68,12 +69,12 @@ public class SheetDetailFragment extends Fragment {
     public SheetDetail              detail;
     private final String            TAG = "PrestaSheetAddFragment";
 
-    int Year,Month,Day;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    boolean deleteActivated = false;
-    public List<SheetDetail> detailList = new ArrayList<>();
+    int                             Year,Month,Day;
+    SimpleDateFormat                simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    boolean                         deleteActivated = false;
+    public List<SheetDetail>        detailList = new ArrayList<>();
 
-    SheetDetailAdapter adapter;
+    SheetDetailAdapter              adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class SheetDetailFragment extends Fragment {
         paid            =view.findViewById(R.id.id_switch_sheet_paid);
 
         //Remplissage de la feuille
-        if (sheetKey !=-1) {
+        if (SHEET_ID !=-1) {
             try {
                 setSheet();
             } catch (ParseException e) {
@@ -162,7 +163,7 @@ public class SheetDetailFragment extends Fragment {
 
     private void fabInit(){
 
-        if (sheetKey == -1) {
+        if (SHEET_ID == -1) {
             fabAnimate.showAdd();
         } else {
             fabAnimate.showEdit();
@@ -173,12 +174,12 @@ public class SheetDetailFragment extends Fragment {
                 fabAnimate.validate();
                 hideKeyboard();
                 if (sheetIsValid()) {
-                    if (sheetKey == -1) {
+                    if (SHEET_ID == -1) {
                         addSheet();
-                        sheetKey = -1;
+                        SHEET_ID = -1;
                     } else {
-                        editsheet(sheetKey);
-                        sheetKey = -1;
+                        editsheet(SHEET_ID);
+                        SHEET_ID = -1;
                     }
 
                     NavHostFragment
@@ -196,13 +197,13 @@ public class SheetDetailFragment extends Fragment {
      */
     private void setSheet() throws ParseException {
         Log.i(TAG, "setSheet: Initialisation de la feuille");
-        sheet = sheetModel.getSheet(context,sheetKey);
+        sheet = sheetModel.getSheet(context, SHEET_ID);
         date.setText(simpleDateFormat.format(sheet.getDate()));
         name.setText(sheet.getName());
         sponsor.setText(sheet.getSponsor());
         price.setText(String.valueOf(sheet.getPrice()));
         paid.setChecked(sheet.isPaid());
-        detailList = sheetModel.getDetails(context,sheetKey);
+        detailList = sheetModel.getDetails(context, SHEET_ID);
 
         if (detailList !=null){
             updateDetails();
@@ -637,7 +638,7 @@ public class SheetDetailFragment extends Fragment {
         //Création et Récupération de la clé de la nouvelle feuille dans la bdd, hors details
 
         //TODO a modifier avec mise à jour de l'objet et appel de l'objet dans sheetModel
-        sheetKey = sheetModel.CreateSheet(context,
+        SHEET_ID = sheetModel.CreateSheet(context,
                 clientModel.getKey(context, sheet.getName()),
                 clientModel.getKey(context, sheet.getSponsor()),
                 sheet.getDate(),
@@ -646,7 +647,7 @@ public class SheetDetailFragment extends Fragment {
                 sheet.getNote()
         );
 
-        saveDetails(context,sheetKey);
+        saveDetails(context, SHEET_ID);
     }
 
     /*

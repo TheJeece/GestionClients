@@ -26,8 +26,10 @@ import com.jcr.GestionClients.fabAnimate;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.ui.Prestations.PrestationsFragment.PrestaKey;
-
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class PrestationEditFragment extends Fragment {
 
@@ -80,7 +82,7 @@ public class PrestationEditFragment extends Fragment {
     }
 
     private void fabInit() {
-        if (PrestaKey ==-1) {
+        if (PRESTA_ID ==-1) {
             fabAnimate.showAdd();
         }else {
             fabAnimate.showEdit();
@@ -89,7 +91,7 @@ public class PrestationEditFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 fabAnimate.validate();
-                if (PrestaKey == -1) {
+                if (PRESTA_ID == -1) {
                     addPresta();
                 } else {
                     editPresta();
@@ -107,15 +109,15 @@ public class PrestationEditFragment extends Fragment {
     }
 
     private void setPrice(){
-        etPrice.setText(String.valueOf(prestationsModel.getPrice(getContext(), PrestaKey)));
+        etPrice.setText(String.valueOf(prestationsModel.getPrice(getContext(), PRESTA_ID)));
     }
 
     private void setPrestations(){
-        etPresta.setText(prestationsModel.getPresta(getContext(), PrestaKey));
+        etPresta.setText(prestationsModel.getPresta(getContext(), PRESTA_ID));
     }
 
     private void setCategories(){
-        tvCategories.setText(prestationsModel.getCat(getContext(), CategoriesFragment.CatKey));
+        tvCategories.setText(prestationsModel.getCat(getContext(), CAT_ID));
         tvCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -134,7 +136,7 @@ public class PrestationEditFragment extends Fragment {
         prestation = etPresta.getText().toString();
         price = Long.parseLong(etPrice.getText().toString());
         prestationsModel.addPresta(getContext(), prestationsModel.getCatKey(getContext(), category), prestation, price);
-        PrestaKey=-1;
+        PRESTA_ID =-1;
         hideKeyboard();
         NavHostFragment.findNavController(PrestationEditFragment.this).popBackStack();
     }
@@ -143,8 +145,8 @@ public class PrestationEditFragment extends Fragment {
         category = tvCategories.getText().toString();
         prestation = etPresta.getText().toString();
         price = Long.parseLong(etPrice.getText().toString());
-        prestationsModel.editPresta(getContext(),PrestaKey, prestationsModel.getCatKey(getContext(), category), prestation, price);
-        PrestaKey=-1;
+        prestationsModel.editPresta(getContext(), PRESTA_ID, prestationsModel.getCatKey(getContext(), category), prestation, price);
+        PRESTA_ID =-1;
         NavHostFragment.findNavController(PrestationEditFragment.this).popBackStack();
     }
 

@@ -9,17 +9,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.jcr.GestionClients.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +24,6 @@ import java.util.List;
 public class ClientImportModel extends ViewModel {
 
     private static final String TAG = "IMPORT";
-    static final int IDs= 0,NAMES=1,PHONES=2,MAILS=3,ADDRESSES=4;
 
 
     public List<String> nameID,name, namesIDs, names, mails, addresses, phones;
@@ -40,8 +32,7 @@ public class ClientImportModel extends ViewModel {
 
     /*
     ##########  METHODE DE RECUPERATION DES CONTACTS TELEPHONES  ##########
-    contactList.get(0) == IDs
-    contactList.get(1) == Noms
+    contactList.get([IDs,Names,Phones,Mails,Addresses]).get(ContactIndex).get(ObjectNumber))
      */
     public List<List<String>> getContactList(Context context) {
 
@@ -53,11 +44,11 @@ public class ClientImportModel extends ViewModel {
         nDialog.setCancelable(true);
         nDialog.show();
 
-//        Log.i(TAG, "Récupération des contacts");
+        Log.i(TAG, "Récupération des contacts");
         Cursor cContact =context.getContentResolver().query(
                 ContactsContract.Contacts.CONTENT_URI, null, null,null,
                 ContactsContract.Contacts.DISPLAY_NAME+" ASC");
-//        Log.i(TAG, "taille du curseur cContact : " + cContact.getCount());
+        Log.i(TAG, "taille du curseur cContact : " + cContact.getCount());
 
         namesIDs = new ArrayList();
         names = new ArrayList();
@@ -68,7 +59,7 @@ public class ClientImportModel extends ViewModel {
         name = new ArrayList();
 
 
-//        Log.i(TAG, "Récupération des contacts ...");
+        Log.i(TAG, "Récupération des contacts ...");
 
         if (cContact.getCount()>0) {
             cContact.moveToFirst();
@@ -242,32 +233,28 @@ public class ClientImportModel extends ViewModel {
     /*
     ##########  METHODE DE VERIFICATION D'AUTORISATION D'ACCESS AU REPERTOIRE  ##########
      */
-    public boolean HasPermission(Context context, View view) {
+    public boolean HasPermission(Context context) {
 
-        int     permissioncheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS);
-        boolean ret;
 
+        Log.i(TAG, "SET permissioncheck");
+        int permissioncheck = ContextCompat.checkSelfPermission(
+                context, Manifest.permission.READ_CONTACTS);
+
+        Log.i(TAG, "CHECK permissioncheck");
         if (permissioncheck == PackageManager.PERMISSION_GRANTED) {
-            ret = true;
+            return true;
         } else {
-//            Toast.makeText(context,"Permission refusée",Toast.LENGTH_LONG).show();
-//            Snackbar snackbar= Snackbar.make(view,"Permission denied",Snackbar.LENGTH_LONG);
-//            snackbar.show();
             return false;
         }
-
-        return ret;
     }
 
-    public void requestPermission (Activity activity){
-        int     READ_CONTACTS   =1;
+    public void requestPermission(Activity activity) {
+        int READ_CONTACTS=1;
 
         ActivityCompat.requestPermissions(
-                    activity,
-                    new String[]{Manifest.permission.READ_CONTACTS},
-                    READ_CONTACTS);
-
+                activity,
+                new String[]{Manifest.permission.READ_CONTACTS},
+                READ_CONTACTS);
     }
-
 
 }

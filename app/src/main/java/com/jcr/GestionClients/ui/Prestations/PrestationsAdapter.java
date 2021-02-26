@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,11 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.R;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class PrestationsAdapter extends RecyclerView.Adapter<PrestationsAdapter.
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PrestationsFragment.PrestaKey = prestation.getId();
+                PRESTA_ID = prestation.getId();
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_nav_ListePrestations_to_nav_EditPresta);
             }

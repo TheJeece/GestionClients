@@ -2,48 +2,40 @@ package com.jcr.GestionClients.ui.Prestations;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
 import com.jcr.GestionClients.fabAnimate;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 
 import static android.app.Activity.RESULT_OK;
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.ui.Prestations.CategoriesFragment.CatKey;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+
+
 
 public class CategoryEditFragment extends Fragment {
 
@@ -101,7 +93,7 @@ public class CategoryEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (CatKey == -1 && prestationsModel.isCatExists(context,s.toString())){
+                if (CAT_ID == -1 && prestationsModel.isCatExists(context,s.toString())){
                     tilCategory.setError(getString(R.string.CategoryAlreadyExists));
                     fab.setVisibility(View.GONE);
                 } else {
@@ -116,7 +108,7 @@ public class CategoryEditFragment extends Fragment {
      * Définit le listener sur le fab et l'action associée
      */
     private void setFab() {
-        if (CatKey == -1) {
+        if (CAT_ID == -1) {
             fabAnimate.showAdd();
         } else {
             fabAnimate.showEdit();
@@ -138,7 +130,7 @@ public class CategoryEditFragment extends Fragment {
      * Crée ou met à jour une entrée dans la base de donnée
      */
     private void saveCat (){
-        if (CatKey == -1) {
+        if (CAT_ID == -1) {
             //Crée une nouvelle category
             prestationsModel.addCat(context,etCategory.getText().toString(),bitmapScaled);
         } else {
@@ -152,8 +144,8 @@ public class CategoryEditFragment extends Fragment {
      * Définit le contenu de etCategory et imCategory si un client a été sélectionné
      */
     private void setContent(){
-        if (CatKey != -1) {
-            category = prestationsModel.getCategory(context, CatKey);
+        if (CAT_ID != -1) {
+            category = prestationsModel.getCategory(context, CAT_ID);
             etCategory.setText(category.getName());
             imCategory.setImageBitmap(category.getImage());
         }

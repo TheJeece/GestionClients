@@ -1,158 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:visibility="visible"
-    android:id="@+id/idlayout"
-    tools:context="com.jcr.GestionClients.ui.Clients.ClientEditFragment">
+    android:orientation="vertical"
+    android:visibility="visible">
 
-    <!--NOM-->
+    <androidx.core.widget.NestedScrollView
 
-    <androidx.cardview.widget.CardView
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:orientation="vertical"
+            android:visibility="visible">
 
+            <!--NOM-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/ClientName"
-                app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:startIconDrawable="@drawable/ic_contact">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:focusableInTouchMode="false"
+                android:padding="8dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/id_actv_client_name"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                     />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_phone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="@string/ClientPhone"
-                app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="@+id/id_til_client_name"
-                app:layout_constraintStart_toStartOf="@+id/id_til_client_name"
-                app:layout_constraintTop_toBottomOf="@+id/id_til_client_name"
-                app:startIconDrawable="@drawable/ic_phone">
-
-                <AutoCompleteTextView
-                    android:id="@+id/id_actv_client_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_address"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="@string/ClientAddress"
-                app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="@+id/id_til_client_phone"
-                app:layout_constraintStart_toStartOf="@+id/id_til_client_phone"
-                app:layout_constraintTop_toBottomOf="@+id/id_til_client_phone"
-                app:startIconDrawable="@drawable/ic_location">
-
-                <AutoCompleteTextView
-                    android:id="@+id/id_actv_client_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_mail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="@string/ClientMail"
-                app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="@+id/id_til_client_address"
-                app:layout_constraintStart_toStartOf="@+id/id_til_client_address"
-                app:layout_constraintTop_toBottomOf="@+id/id_til_client_address"
-                app:startIconDrawable="@drawable/ic_mail"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/id_actv_client_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_bday"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="@string/ClientBday"
-                app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="@+id/id_til_client_mail"
-                app:layout_constraintStart_toStartOf="@+id/id_til_client_mail"
-                app:layout_constraintTop_toBottomOf="@+id/id_til_client_mail"
-                app:startIconDrawable="@drawable/ic_calendar">
-
-                <AutoCompleteTextView
-                    android:id="@+id/id_actv_client_bday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_til_client_note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:hint="@string/note"
-                app:layout_constraintEnd_toEndOf="@+id/id_til_client_bday"
-                app:layout_constraintStart_toStartOf="@+id/id_til_client_bday"
-                app:layout_constraintTop_toBottomOf="@+id/id_til_client_bday"
-                app:startIconDrawable="@drawable/ic_note">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/id_et_client_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/note"
-                    android:inputType="textMultiLine" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <!--TELEPHONE-->
-
-    <!--MAIL-->
-
-    <!--ADRESSE-->
-
-    <!--ANNIVERSAIRE-->
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_name"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ClientName"
+                        app:endIconMode="dropdown_menu"
+                        app:startIconDrawable="@drawable/ic_contact">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_actv_client_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_phone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ClientPhone"
+                        app:endIconMode="dropdown_menu"
+                        app:startIconDrawable="@drawable/ic_phone">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_actv_client_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_address"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ClientAddress"
+                        app:endIconMode="dropdown_menu"
+                        app:startIconDrawable="@drawable/ic_location">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_actv_client_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textPostalAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_mail"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ClientMail"
+                        app:endIconMode="dropdown_menu"
+                        app:startIconDrawable="@drawable/ic_mail">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_actv_client_mail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_bday"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ClientBday"
+                        app:endIconMode="dropdown_menu"
+                        app:startIconDrawable="@drawable/ic_calendar">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/id_actv_client_bday"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/id_til_client_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/note"
+                        app:startIconDrawable="@drawable/ic_note">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/id_et_client_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/note"
+                            android:inputType="textMultiLine" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/id_cv_presta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/margin"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
+                        app:strokeColor="@android:color/darker_gray"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_tv_presta"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin"
+                                android:text="@string/LastPresta"
+                                android:textSize="@dimen/Text_size" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/id_rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin" />
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

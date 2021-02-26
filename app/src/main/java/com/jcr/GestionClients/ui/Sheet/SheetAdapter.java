@@ -10,30 +10,30 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jcr.GestionClients.MainActivity;
 import com.jcr.GestionClients.R;
-import com.jcr.GestionClients.fabAnimate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class SheetAdapter extends RecyclerView.Adapter<SheetAdapter.SheetHolder> {
 
-    Context context;
-    List<Sheet> list = new ArrayList<>();
-    Date currentDate=null;
+    Context         context;
+    List<Sheet>     list = new ArrayList<>();
+    Date            currentDate=null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    boolean deleteActivated;
-    long sum;
-    SheetModel sheetModel;
+    boolean         deleteActivated;
+    long            sum;
+    SheetModel      sheetModel;
 
     public SheetAdapter(Context context, List<Sheet> list, boolean deleteActivated) {
         this.context = context;
@@ -97,7 +97,7 @@ public class SheetAdapter extends RecyclerView.Adapter<SheetAdapter.SheetHolder>
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SheetFragment.sheetKey = sheet.getID();
+                SHEET_ID = sheet.getID();
                 Navigation
                         .findNavController(v)
                         .navigate(R.id.action_nav_sheet_to_nav_sheetAdd);

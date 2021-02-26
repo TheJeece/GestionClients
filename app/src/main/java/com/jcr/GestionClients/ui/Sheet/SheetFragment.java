@@ -19,15 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jcr.GestionClients.fabAnimate;
 
 import java.util.ArrayList;
@@ -36,6 +33,10 @@ import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.toolBarLayout;
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.CAT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class SheetFragment extends Fragment {
 
@@ -53,7 +54,6 @@ public class SheetFragment extends Fragment {
     List<Sheet>     listSheets;
     List<Sheet>     filteredSheets;
 
-    static int      sheetKey=-1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class SheetFragment extends Fragment {
                     delSheet();
                 }else
                 {
-                    sheetKey = -1;
+                    SHEET_ID = -1;
                     NavHostFragment.findNavController(SheetFragment.this)
                         .navigate(R.id.action_nav_sheet_to_nav_sheetAdd);
                 }
@@ -149,7 +149,7 @@ public class SheetFragment extends Fragment {
     public void delSheet(){
         if (deleteActivated){
             deleteActivated=false;
-            sheetKey = -1;
+            SHEET_ID = -1;
 
             for (int i = 0 ; i<listSheets.size();i++) {
                 if (listSheets.get(i).isSelected) {

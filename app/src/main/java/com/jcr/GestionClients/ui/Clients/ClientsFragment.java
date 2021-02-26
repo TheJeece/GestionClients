@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import androidx.annotation.RequiresApi;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.core.app.NotificationCompatSideChannelService;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -35,13 +33,12 @@ import java.util.List;
 
 import com.jcr.GestionClients.Keyboard;
 import com.jcr.GestionClients.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jcr.GestionClients.fabAnimate;
 
-import static android.view.View.VISIBLE;
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.toolBarLayout;
-
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 public class ClientsFragment extends Fragment {
 
@@ -51,7 +48,6 @@ public class ClientsFragment extends Fragment {
     ClientAdapter       adapter;
     RecyclerView        recyclerView;
 
-    static int          ClientID =-1;
     Context             context;
     private SearchView  searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
@@ -104,13 +100,12 @@ public class ClientsFragment extends Fragment {
             public void onClick(View view) {
                 fabAnimate.validate();
                 if (!deleteActivated) {
-                    ClientID =-1;
-                    if(cImport.HasPermission(context,view)){
+                    CLIENT_ID =-1;
+                    if (cImport.HasPermission(context)) {
                         NavHostFragment
                                 .findNavController(ClientsFragment.this)
                                 .navigate(R.id.action_nav_Clients_to_EditClient);
                     } else {
-//                        cImport.requestPermission(getActivity());
                         ConfirmDialogBox();
                     }
 

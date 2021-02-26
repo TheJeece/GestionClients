@@ -73,6 +73,7 @@
     <string name="CategoryAlreadyExists">Cette catégorie existe déjà</string>
     <string name="EditClient">Modifier le contact</string>
     <string name="note">Notes</string>
+    <string name="LastPresta">Liste des dernières prestations</string>
 
     <!--Fiches clients-->
 
