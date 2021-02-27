@@ -37,16 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         //scrolling
         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-//        toolBarLayout.setTitle(getTitle());
-        //scrollin ***
-
 
         //Ouverture du layout principal
         DrawerLayout drawer = findViewById(R.id.main_layout);
-        Log.i("MainActivity", "drawer null  " + String.valueOf(drawer == null));
+
         //ouverture du menu latéral
         NavigationView navigationView = findViewById(R.id.nav_view);
-        Log.i("MainActivity", "navigationView null  " + String.valueOf(navigationView == null));
 
         //Construction du menu latéral
         mAppBarConfiguration = new AppBarConfiguration.Builder(

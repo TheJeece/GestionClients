@@ -163,4 +163,27 @@ public class SheetModel extends ViewModel {
         dbh = new DatabaseHandler(context);
         dbh.deleteData(DatabaseHandler.tableSheet,sheetKey);
     }
+
+    /*
+     * Retourne la liste des fiches client
+     */
+    public List<Sheet> getSheetsOfClient(Context context, String name) {
+
+        dbh = new DatabaseHandler(context);
+        List idList = dbh.getListFromTable(DatabaseHandler.tableSheet,0);
+        List<Sheet> sheetList = new ArrayList<>();
+
+        if (idList.size()>0) {
+            int id;
+
+            for (int i = 0; i < idList.size(); i++) {
+                id = Integer.parseInt(idList.get(i).toString());
+                Sheet sheet = getSheet(context,id);
+                if (sheet.getName().equals(name)) {
+                    sheetList.add(sheet);
+                }
+            }
+        }
+        return sheetList;
+    }
 }

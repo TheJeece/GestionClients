@@ -61,7 +61,6 @@ public class SheetDetailFragment extends Fragment {
     private AutoCompleteTextView    name,sponsor,category,prestation;
     private EditText                date,calcPrice,price,note;
     private Switch                  paid;
-    private ImageButton             add,del;
     private ClientModel             clientModel;
     private PrestationsModel        prestationsModel;
     private SheetModel              sheetModel;
@@ -109,8 +108,8 @@ public class SheetDetailFragment extends Fragment {
         calcPrice       = view.findViewById(R.id.id_et_sheet_calc);
         tilPrice        = view.findViewById(R.id.id_til_sheet_price);
         price           = view.findViewById(R.id.id_et_sheet_price);
-        add             =view.findViewById(R.id.id_btn_sheet_add);
-        del             =view.findViewById(R.id.id_btn_sheet_del);
+        ImageButton add = view.findViewById(R.id.id_btn_sheet_add);
+        ImageButton del = view.findViewById(R.id.id_btn_sheet_del);
         paid            =view.findViewById(R.id.id_switch_sheet_paid);
 
         //Remplissage de la feuille

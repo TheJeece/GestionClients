@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -99,40 +100,36 @@ public class ClientEditFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        context = getContext();
 
-        //initialisation des boutons
+        context         = getContext();
+        sheetModel      = new ViewModelProvider(this).get(SheetModel.class);
+
+        //initialisation du fab
         fabInit();
-
-        sheetModel = new ViewModelProvider(this).get(SheetModel.class);
-
         //initialisation des champs
-        init(view);
-
-        //Gestion du clic sur un espace vide
-        view.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    // Hiding the keyboard
-                    Keyboard.hide(getActivity(),view);
-//                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(actvName.getWindowToken(), 0);
-                }
-            }
-        );
-
+        init();
+        //Masque le clavier à l'ouverture de la vue
         Keyboard.hide(getActivity(),getView());
-
         //initialisation des listeners sur les champs;
         listenersInit();
 
+        //Gestion du clic sur un espace vide
+        view.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        // Hiding the keyboard
+                        Keyboard.hide(getActivity(),view);
+                    }
+                }
+        );
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //affichage du contenu du menu
         inflater.inflate(R.menu.tool_menu_edit_client, menu);
+
         if (CLIENT_ID ==-1) {
             menu.findItem(R.id.id_delete).setVisible(false);
             menu.findItem(R.id.id_import).setVisible(false);
@@ -154,11 +151,18 @@ public class ClientEditFragment extends Fragment {
         }
     }
 
-    public void init(View view){
+    /*
+     * Initialisation des champs
+     */
+    public void init(){
         //si client sélectionné
         if (CLIENT_ID != -1) {
+
+            //Mise à jour du titre de la vue
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
             toolbar.setTitle(getString(R.string.EditClient));
+
+            //Création de l'objet client avec les données de la bdd
             client = new Client(clientModel.getName(context, CLIENT_ID),
                     clientModel.getPhone(getContext(), CLIENT_ID),
                     clientModel.getAddress(getContext(), CLIENT_ID),
@@ -166,7 +170,8 @@ public class ClientEditFragment extends Fragment {
                     clientModel.getBday(getContext(), CLIENT_ID),
                     clientModel.getNote(getContext(), CLIENT_ID),
                     false);
-            actvName.setText(client.getName());
+
+            //Remplissage des changes
             setFields();
             textView.setVisibility(View.VISIBLE);
             cardView.setVisibility(View.VISIBLE);
@@ -208,18 +213,20 @@ public class ClientEditFragment extends Fragment {
     }
 
     public void setPrestaAdapter() {
-        List<Sheet> sheets = sheetModel.getSheets(context);
-        List<Sheet> clientSheets = new ArrayList<>();
+        List<Sheet> sheets = sheetModel.getSheetsOfClient(context,client.getName());
+
+        Toast.makeText(context, "sheets " + sheets.size(), Toast.LENGTH_SHORT).show();
 
         if (sheets!=null) {
-            for (int i = 0;i<sheets.size();i++) {
-                if (sheets.get(i).getName().equals(client.getName())) {
-                    clientSheets.add(sheets.get(i));
-                }
+
+            if (sheets.size() != 0) {
+                RecyclerView.Adapter adapter = new ClientEditAdapter(context, sheets);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else{
+                textView.setText("Aucun historique");
+                recyclerView.setVisibility(View.GONE);
             }
-            RecyclerView.Adapter adapter=new ClientEditAdapter(context, clientSheets);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         } else {
             textView.setText("Aucune prestation enregistrée");
@@ -228,11 +235,8 @@ public class ClientEditFragment extends Fragment {
 
     }
 
-
-
     public void fabInit() {
-        //fabADD
-//        fabAdd = view.findViewById(R.id.fabAdd);
+
         if (CLIENT_ID ==-1) {
             fabAnimate.showAdd();
         }else {
@@ -451,6 +455,7 @@ public class ClientEditFragment extends Fragment {
 
         return ret;
     }
+
     public int ContactListID(String name) {
         int id = -1;
         for (int i=0;i<contactsList.get(0).size();i++){
@@ -482,6 +487,9 @@ public class ClientEditFragment extends Fragment {
     }
 
     public void setFields () {
+
+        actvName.setText(client.getName());
+
         client.setPhone(clientModel.getPhone(context, CLIENT_ID));
         actvPhone.setText(client.getPhone());
 
