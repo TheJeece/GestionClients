@@ -1,5 +1,6 @@
 package com.jcr.GestionClients.ui.Clients;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 
 import android.content.Context;
@@ -92,7 +93,6 @@ public class ClientEditFragment extends Fragment {
         textView        = view.findViewById(R.id.id_tv_presta);
 
         client = new Client("","","","",null,"",false);
-
 
         return view;
     }
@@ -215,8 +215,6 @@ public class ClientEditFragment extends Fragment {
     public void setPrestaAdapter() {
         List<Sheet> sheets = sheetModel.getSheetsOfClient(context,client.getName());
 
-        Toast.makeText(context, "sheets " + sheets.size(), Toast.LENGTH_SHORT).show();
-
         if (sheets!=null) {
 
             if (sheets.size() != 0) {
@@ -235,6 +233,7 @@ public class ClientEditFragment extends Fragment {
 
     }
 
+
     public void fabInit() {
 
         if (CLIENT_ID ==-1) {
@@ -252,8 +251,8 @@ public class ClientEditFragment extends Fragment {
                 } else {
                     addClient();
                 }
-
-                    NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
+                Keyboard.hide(getActivity(),view);
+                NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
             }
         });
     }
@@ -611,8 +610,7 @@ public class ClientEditFragment extends Fragment {
 
             Snackbar.make(getView(), "Ajouté", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_nav_AddClient_to_Clients);
+
 
 
             //si vide
@@ -632,14 +630,12 @@ public class ClientEditFragment extends Fragment {
         clientModel.setMail(getContext(),Key, actvMail.getText().toString());
         clientModel.setBday(getContext(),Key, actvBday.getText().toString());
         clientModel.setNote(getContext(),Key, etNote.getText().toString());
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_AddClient_to_Clients);
     }
 
     public void delClient () {
         Context context = getActivity().getApplicationContext();
         
         clientModel.delete(context, clientModel.getKey(context, actvName.getText().toString()));
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_AddClient_to_Clients);
 
     }
 

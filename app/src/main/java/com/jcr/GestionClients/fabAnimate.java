@@ -1,5 +1,8 @@
 package com.jcr.GestionClients;
 
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -10,16 +13,22 @@ import static com.jcr.GestionClients.MainActivity.fab;
 
 public class fabAnimate {
 
+    private static final int      DURATION_LONG = 200;
+    private static final int      DURATION_SHORT = 100;
+    private static final int      TRANSLATION_OUT = 300;
+    private static final int      TRANSLATION_OVERSHOOT = -50;
+
+
     public static void validate() {
         fab.animate()
-                .setDuration(100)
+                .setDuration(DURATION_SHORT)
                 .scaleX(1.1f)
                 .scaleY(1.1f)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
                         fab.animate()
-                                .setDuration(100)
+                                .setDuration(DURATION_SHORT)
                                 .scaleX(1.0f)
                                 .scaleY(1.0f)
                                 .start();
@@ -40,29 +49,32 @@ public class fabAnimate {
 
     public static void hide(){
         fab.animate()
-                .setDuration(200)
-                .translationY(300)
+                .setDuration(DURATION_LONG)
+                .scaleX(0.0f)
+                .scaleY(0.0f)
                 .start();
     }
 
     private static void show(int drawableId) {
 
         fab.animate()
-                .setDuration(200)
-                .translationY(300)
+                .setDuration(DURATION_LONG)
+                .translationX(TRANSLATION_OUT)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
                         fab.setImageResource(drawableId);
                         fab.animate()
-                                .setDuration(200)
-                                .translationY(-50)
+                                .setDuration(DURATION_LONG)
+                                .scaleX(1.0f)
+                                .scaleY(1.0f)
+                                .translationX(TRANSLATION_OVERSHOOT)
                                 .withEndAction(new Runnable() {
                                     @Override
                                     public void run() {
                                         fab.animate()
-                                                .setDuration(50)
-                                                .translationY(0)
+                                                .setDuration(DURATION_SHORT)
+                                                .translationX(0)
                                                 .start();
                                     }
                                 })
@@ -83,7 +95,7 @@ public class fabAnimate {
     public static void rotateInflate(int drawableId){
         fab.animate()
                 .rotationBy(180)
-                .setDuration(100)
+                .setDuration(DURATION_LONG)
                 .scaleX(1.1f)
                 .scaleY(1.1f)
                 .withEndAction(new Runnable() {
@@ -95,7 +107,7 @@ public class fabAnimate {
                         //Shrink Animation
                         fab.animate()
                                 .rotationBy(180)
-                                .setDuration(100)
+                                .setDuration(DURATION_SHORT)
                                 .scaleX(1)
                                 .scaleY(1)
                                 .start();
