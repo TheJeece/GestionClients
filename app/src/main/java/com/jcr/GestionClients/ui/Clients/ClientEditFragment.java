@@ -247,11 +247,12 @@ public class ClientEditFragment extends Fragment {
                 fabAnimate.validate();
                 if (CLIENT_ID !=-1) {
                     editClient(CLIENT_ID);
-                    CLIENT_ID = -1;
+
                 } else {
                     addClient();
                 }
                 Keyboard.hide(getActivity(),view);
+                CLIENT_ID = -1;
                 NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
             }
         });
@@ -606,8 +607,6 @@ public class ClientEditFragment extends Fragment {
             actvBday.setText("");
 
             //Confirmation
-            CLIENT_ID = -1;
-
             Snackbar.make(getView(), "Ajouté", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 

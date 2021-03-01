@@ -286,11 +286,13 @@ public class SheetDetailFragment extends Fragment {
     VERIFICATION DU FORMAT DATE
      */
     private boolean isDateValid(String[] dateParts) {
-        int day = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int year = Integer.parseInt(dateParts[2]);
+        int day     = Integer.parseInt(dateParts[0]);
+        int month   = Integer.parseInt(dateParts[1]);
+        int year    = Integer.parseInt(dateParts[2]);
         Log.i(TAG, "isDateValid: \nday : " + day + " \nmonth : "+month + "\nYear : "+Year);
-        boolean dayOK = false,monthOK=false,yearOK=false;
+        boolean dayOK   = false;
+        boolean monthOK = false;
+        boolean yearOK  = false;
         if (day>0 && day<=31 && month>0 && month <=12 && year >=1900) {
             yearOK=true;
             monthOK=true;
@@ -304,6 +306,8 @@ public class SheetDetailFragment extends Fragment {
                     if (day == 29 && divYear == Year/4) {
                         dayOK=true;
                     }
+                } else {
+                    dayOK=true;
                 }
             } else {
                 dayOK=true;
@@ -347,6 +351,7 @@ public class SheetDetailFragment extends Fragment {
                 String query = name.getText().toString();
                 if (!query.equals("") && !clientModel.clientExists(context, query)) {
                     tilName.setError(getString(R.string.NameDoesNotExists));
+
                 } else if (query.equals("")) {
                     tilName.setError(getString(R.string.NameEmpty));
                 } else {
@@ -354,12 +359,16 @@ public class SheetDetailFragment extends Fragment {
                         tilName.setError(null);
                     }
                     sheet.setName(query);
-                    Snackbar.make(getView(), "Nom Sélectionné " + sheet.getName(), Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!s.equals("") && !clientModel.clientExists(context, s.toString())) {
+                    Keyboard.hide(getActivity(),getView());
+                    Snackbar.make(getActivity().findViewById(R.id.id_sv),getString(R.string.AddClient),Snackbar.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -391,8 +400,7 @@ public class SheetDetailFragment extends Fragment {
                 String query = sponsor.getText().toString();
                 if (!query.equals("") && !clientModel.clientExists(context, query)) {
                     tilSponsor.setError(getString(R.string.NameDoesNotExists));
-                } else if (query.equals("")) {
-                    tilSponsor.setError(getString(R.string.NameEmpty));
+
                 } else {
                     if (tilSponsor.getError() !=null) {
                         tilSponsor.setError(null);

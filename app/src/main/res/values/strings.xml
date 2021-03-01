@@ -74,6 +74,7 @@
     <string name="EditClient">Modifier le contact</string>
     <string name="note">Notes</string>
     <string name="LastPresta">Liste des dernières prestations</string>
+    <string name="AddClient">Ajouter un nouveau client</string>
 
     <!--Fiches clients-->
 

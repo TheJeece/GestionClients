@@ -60,10 +60,13 @@ public class fabAnimate {
         fab.animate()
                 .setDuration(DURATION_LONG)
                 .translationX(TRANSLATION_OUT)
+                .scaleY(0)
+                .scaleX(0)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
                         fab.setImageResource(drawableId);
+                        fab.setVisibility(View.VISIBLE);
                         fab.animate()
                                 .setDuration(DURATION_LONG)
                                 .scaleX(1.0f)
