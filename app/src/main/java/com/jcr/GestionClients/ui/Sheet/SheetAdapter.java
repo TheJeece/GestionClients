@@ -13,17 +13,14 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jcr.GestionClients.MainActivity;
 import com.jcr.GestionClients.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.CAT_ID;
+
 import static com.jcr.GestionClients.MainActivity.SHEET_ID;
-import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class SheetAdapter extends RecyclerView.Adapter<SheetAdapter.SheetHolder> {
 
@@ -43,7 +40,7 @@ public class SheetAdapter extends RecyclerView.Adapter<SheetAdapter.SheetHolder>
 
     @Override
     public SheetHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_item_group,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_group,parent,false);
         return new SheetHolder(view);
     }
 

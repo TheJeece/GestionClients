@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class ClientImportModel extends ViewModel {
+public class ClientModelImport extends ViewModel {
 
     private static final String TAG = "IMPORT";
 

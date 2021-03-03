@@ -38,13 +38,12 @@ import com.jcr.GestionClients.fabAnimate;
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.toolBarLayout;
 import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 public class ClientsFragment extends Fragment {
 
     String TAG = "Clients";
     private ClientModel clientModel;
-    private ClientImportModel cImport;
+    private ClientModelImport cImport;
     ClientAdapter       adapter;
     RecyclerView        recyclerView;
 
@@ -69,7 +68,7 @@ public class ClientsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         // ClientModelgère la communication avec la database
         clientModel     = new ViewModelProvider(this).get(ClientModel.class);
-        cImport         = new ViewModelProvider(this).get(ClientImportModel.class);
+        cImport         = new ViewModelProvider(this).get(ClientModelImport.class);
         //Création de la vue
         View view = inflater.inflate(R.layout.fragment_client, container, false);
         recyclerView = view.findViewById(R.id.RecyclerView);

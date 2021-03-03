@@ -135,7 +135,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/id_cv_presta"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin"
                         android:clickable="false"
                         android:focusableInTouchMode="false"
@@ -159,11 +159,43 @@
                                 android:id="@+id/id_rv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/margin" />
+                                android:layout_margin="@dimen/margin"
+                                android:elevation="2dp" />
                         </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/id_cv_sponsor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
+                        app:strokeColor="@android:color/darker_gray"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/id_tv_sponsor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin"
+                                android:text="@string/SponsorList"
+                                android:textSize="@dimen/Text_size" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/id_rv_sponsor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin" />
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

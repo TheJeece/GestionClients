@@ -47,10 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.CAT_ID;
 import static com.jcr.GestionClients.MainActivity.SHEET_ID;
-import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 
 public class SheetDetailFragment extends Fragment {
@@ -324,7 +321,7 @@ public class SheetDetailFragment extends Fragment {
         Log.i(TAG, "setName: Initialisation du nom");
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 clientModel.getNames(getContext())
         );
         name.setAdapter(adapter);
@@ -381,7 +378,7 @@ public class SheetDetailFragment extends Fragment {
         Log.i(TAG, "setSponsor: Initialisation du parrain");
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 clientModel.getNames(getContext())
         );
         sponsor.setAdapter(adapter);
@@ -424,7 +421,7 @@ public class SheetDetailFragment extends Fragment {
         Log.i(TAG, "setCategory: Initialisation des catégories");
         ArrayAdapter<String> adapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 prestationsModel.getCats(getContext())
         );
         category.setAdapter(adapter);
@@ -526,7 +523,7 @@ public class SheetDetailFragment extends Fragment {
             int catID = prestationsModel.getCatKey(context, category.getText().toString());
             ArrayAdapter<String> adapter = new ArrayAdapter(
                     getContext(),
-                    R.layout.list_item_textfield,
+                    R.layout.item_list_textview_simple,
                     prestationsModel.getPrestas(getContext(), catID)
             );
             prestation.setAdapter(adapter);
