@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolder> {
 
@@ -38,7 +37,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.SheetHolde
 
     @Override
     public SheetHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_client_group,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_client_group,parent,false);
         return new SheetHolder(view);
     }
 

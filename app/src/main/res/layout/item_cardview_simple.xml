@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:gravity="center_vertical"
-                android:minHeight="@dimen/min_smallCard_Height"
+                android:minHeight="@dimen/min_Card_Height"
                 android:text="Nom"
                 android:textSize="@dimen/Main_item_size"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -39,9 +38,9 @@
             <CheckBox
                 android:id="@+id/id_check"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/min_smallCard_Height"
+                android:layout_height="wrap_content"
                 android:checked="false"
-                android:textSize="1sp"
+                android:textSize="0sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +48,7 @@
             <TextView
                 android:id="@+id/id_price"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:text="TextView"
                 android:textSize="@dimen/Sub_item_size"
@@ -62,9 +61,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
                 android:text=" €"
                 android:textSize="@dimen/Sub_item_size"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/id_check"
                 app:layout_constraintTop_toTopOf="parent" />

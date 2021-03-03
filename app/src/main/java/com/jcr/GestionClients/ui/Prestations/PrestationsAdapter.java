@@ -14,9 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.R;
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.CAT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
+
 import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 
@@ -37,7 +35,7 @@ public class PrestationsAdapter extends RecyclerView.Adapter<PrestationsAdapter.
 
     @Override
     public PrestaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_simple,parent,false);
         return new PrestaHolder(view);
     }
 

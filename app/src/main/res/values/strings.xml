@@ -75,6 +75,7 @@
     <string name="note">Notes</string>
     <string name="LastPresta">Liste des dernières prestations</string>
     <string name="AddClient">Ajouter un nouveau client</string>
+    <string name="SponsorList">Liste des clients sponsorisés</string>
 
     <!--Fiches clients-->
 

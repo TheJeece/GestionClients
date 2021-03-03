@@ -1,6 +1,5 @@
 package com.jcr.GestionClients.ui.Clients;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 
 import android.content.Context;
@@ -46,38 +45,49 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.jcr.GestionClients.MainActivity.CLIENT_ID_NAV;
 import static com.jcr.GestionClients.MainActivity.fab;
 import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
-public class ClientEditFragment extends Fragment {
+public class ClientsFragmentEdit extends Fragment {
     private static final String TAG = "EDIT";
     private ClientModel clientModel;
-    private ClientImportModel cImport;
+    private ClientModelImport cImport;
+    int                 importedClientID;
+    private int         Year,Month, Day;
+    Context             context;
+
 
     List                phone, mail, address, bDay;
     TextInputLayout     tilName,tilPhone,tilAddress,tilMail,tilBday;
     AutoCompleteTextView actvName, actvPhone, actvAddress, actvMail, actvBday;
     EditText            etNote;
     Client              client;
-    int                 importedClientID;
-    private int         Year,Month, Day;
+
     List<List<String>>  contactsList;
     List<String>        names;
-    Context             context;
+
     SimpleDateFormat    simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    RecyclerView        recyclerView;
-    TextView            textView;
-    CardView            cardView;
+
+    RecyclerView        rvHistory;
+    RecyclerView        rvSponsor;
+
+    TextView            tvHistory;
+    TextView            tvSponsor;
+
+    CardView            cvHistory;
+    CardView            cvSponsor;
+
     SheetModel          sheetModel;
 
+    int clientID;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         clientModel     = new ViewModelProvider(this).get(ClientModel.class);
-        cImport         = new ViewModelProvider(this).get(ClientImportModel.class);
+        cImport         = new ViewModelProvider(this).get(ClientModelImport.class);
 
         View view = inflater.inflate(R.layout.fragment_client_edit, container, false);
 
@@ -88,9 +98,12 @@ public class ClientEditFragment extends Fragment {
         actvAddress     = view.findViewById(R.id.id_actv_client_address);
         actvBday        = view.findViewById(R.id.id_actv_client_bday);
         etNote          = view.findViewById(R.id.id_et_client_note);
-        recyclerView    = view.findViewById(R.id.id_rv);
-        cardView        = view.findViewById(R.id.id_cv_presta);
-        textView        = view.findViewById(R.id.id_tv_presta);
+        rvHistory       = view.findViewById(R.id.id_rv);
+        cvHistory       = view.findViewById(R.id.id_cv_presta);
+        tvHistory       = view.findViewById(R.id.id_tv_presta);
+        rvSponsor       = view.findViewById(R.id.id_rv_sponsor);
+        cvSponsor       = view.findViewById(R.id.id_cv_sponsor);
+        tvSponsor       = view.findViewById(R.id.id_tv_sponsor);
 
         client = new Client("","","","",null,"",false);
 
@@ -104,6 +117,12 @@ public class ClientEditFragment extends Fragment {
         context         = getContext();
         sheetModel      = new ViewModelProvider(this).get(SheetModel.class);
 
+        if (CLIENT_ID_NAV != -1 ) {
+            clientID = CLIENT_ID_NAV;
+        }else{
+            clientID = CLIENT_ID;
+        }
+        CLIENT_ID_NAV = -1;
         //initialisation du fab
         fabInit();
         //initialisation des champs
@@ -130,7 +149,7 @@ public class ClientEditFragment extends Fragment {
         //affichage du contenu du menu
         inflater.inflate(R.menu.tool_menu_edit_client, menu);
 
-        if (CLIENT_ID ==-1) {
+        if (clientID ==-1) {
             menu.findItem(R.id.id_delete).setVisible(false);
             menu.findItem(R.id.id_import).setVisible(false);
         } else {
@@ -156,31 +175,38 @@ public class ClientEditFragment extends Fragment {
      */
     public void init(){
         //si client sélectionné
-        if (CLIENT_ID != -1) {
+        if (clientID != -1) {
 
             //Mise à jour du titre de la vue
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
             toolbar.setTitle(getString(R.string.EditClient));
 
             //Création de l'objet client avec les données de la bdd
-            client = new Client(clientModel.getName(context, CLIENT_ID),
-                    clientModel.getPhone(getContext(), CLIENT_ID),
-                    clientModel.getAddress(getContext(), CLIENT_ID),
-                    clientModel.getMail(getContext(), CLIENT_ID),
-                    clientModel.getBday(getContext(), CLIENT_ID),
-                    clientModel.getNote(getContext(), CLIENT_ID),
+            client = new Client(clientModel.getName(context, clientID),
+                    clientModel.getPhone(getContext(), clientID),
+                    clientModel.getAddress(getContext(), clientID),
+                    clientModel.getMail(getContext(), clientID),
+                    clientModel.getBday(getContext(), clientID),
+                    clientModel.getNote(getContext(), clientID),
                     false);
 
-            //Remplissage des changes
+            //Remplissage des champs
             setFields();
-            textView.setVisibility(View.VISIBLE);
-            cardView.setVisibility(View.VISIBLE);
 
-            setPrestaAdapter();
+            tvHistory.setVisibility(View.VISIBLE);
+            cvHistory.setVisibility(View.VISIBLE);
+            setHistoryAdapter();
+
+            tvSponsor.setVisibility(View.VISIBLE);
+            cvSponsor.setVisibility(View.VISIBLE);
+            setSponsorAdapter();
+
 
         }   else {
-            textView.setVisibility(View.GONE);
-            cardView.setVisibility(View.GONE);
+            tvHistory.setVisibility(View.GONE);
+            cvHistory.setVisibility(View.GONE);
+            tvSponsor.setVisibility(View.GONE);
+            cvSponsor.setVisibility(View.GONE);
         }
 
         //initialisation des contacts importés
@@ -212,23 +238,66 @@ public class ClientEditFragment extends Fragment {
 
     }
 
-    public void setPrestaAdapter() {
-        List<Sheet> sheets = sheetModel.getSheetsOfClient(context,client.getName());
+    public void setHistoryAdapter() {
 
-        if (sheets!=null) {
+        List<Sheet> clientSheets = sheetModel.getSheetsOfClient(context,client.getName());
 
-            if (sheets.size() != 0) {
-                RecyclerView.Adapter adapter = new ClientEditAdapter(context, sheets);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        if (clientSheets !=null) {
+
+            if (clientSheets.size() != 0) {
+                RecyclerView.Adapter adapter = new ClientAdapterHistory(context, clientSheets);
+                rvHistory.setAdapter(adapter);
+                rvHistory.setLayoutManager(new LinearLayoutManager(context));
             } else{
-                textView.setText("Aucun historique");
-                recyclerView.setVisibility(View.GONE);
+                tvHistory.setText("Aucun historique");
+                rvHistory.setVisibility(View.GONE);
             }
 
         } else {
-            textView.setText("Aucune prestation enregistrée");
-            recyclerView.setVisibility(View.GONE);
+            tvHistory.setText("Aucune prestation enregistrée");
+            rvHistory.setVisibility(View.GONE);
+        }
+
+    }
+
+    public void setSponsorAdapter() {
+
+        List<String[]> sponsoredCLients = new ArrayList();
+        List<Sheet> SponsoredSheets = sheetModel.getSponsoredOfClient(context,client.getName());
+
+        String[] bufName;
+        int nbNames;
+
+        int sSize = SponsoredSheets.size();
+        for (int i = 0; i< sSize; i++) {
+            nbNames = 1;
+            int indexName=0;
+            String[] bufSponsoredClient = new String[]{SponsoredSheets.get(i).getName(),String.valueOf(nbNames)};
+
+            for (int j=0;j<sponsoredCLients.size();j++) {
+
+                if (sponsoredCLients.get(j)[0].toLowerCase().contains(bufSponsoredClient[0].toLowerCase())) {
+                    indexName=j;
+                    nbNames=Integer.parseInt(sponsoredCLients.get(j)[1])+1;
+                }
+            }
+
+            if (nbNames>1) {
+                bufSponsoredClient[1] = String.valueOf(nbNames);
+                sponsoredCLients.set(indexName,bufSponsoredClient);
+            } else {
+                sponsoredCLients.add(bufSponsoredClient);
+            }
+        }
+
+        if (sponsoredCLients !=null && sponsoredCLients.size() != 0) {
+            RecyclerView.Adapter adapter = new ClientAdapterSponsor(context, sponsoredCLients);
+            rvSponsor.setAdapter(adapter);
+            rvSponsor.setLayoutManager(new LinearLayoutManager(context));
+
+        } else {
+            tvSponsor.setText("Aucun parainage");
+            rvSponsor.setVisibility(View.GONE);
         }
 
     }
@@ -236,7 +305,7 @@ public class ClientEditFragment extends Fragment {
 
     public void fabInit() {
 
-        if (CLIENT_ID ==-1) {
+        if (clientID ==-1) {
             fabAnimate.showAdd();
         }else {
             fabAnimate.hide();
@@ -245,15 +314,15 @@ public class ClientEditFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 fabAnimate.validate();
-                if (CLIENT_ID !=-1) {
-                    editClient(CLIENT_ID);
+                if (clientID !=-1) {
+                    editClient(clientID);
 
                 } else {
                     addClient();
                 }
                 Keyboard.hide(getActivity(),view);
-                CLIENT_ID = -1;
-                NavHostFragment.findNavController(ClientEditFragment.this).popBackStack();
+                clientID = -1;
+                NavHostFragment.findNavController(ClientsFragmentEdit.this).popBackStack();
             }
         });
     }
@@ -281,7 +350,7 @@ public class ClientEditFragment extends Fragment {
                     // tous champs identiques pour suppression
 
                     //si l'entrée est à modifier
-                }else if (CLIENT_ID !=-1) {
+                }else if (clientID !=-1) {
                     fabAnimate.showEdit();
 
                 // si l'entrée est n'est pas dans la bdd est est une partie d'un nom du répertorire
@@ -304,10 +373,11 @@ public class ClientEditFragment extends Fragment {
                 //Si non vide et client sélectionné
                 } else if (NameExists(s.toString())) {
 
-                    //Vérifier que l'utilisateur veux changer le nom des clients
-                    //Attentions aux fiches contenant ce nom, le nom du client des fiches sera également modifié
+                    //TODO Vérifier que l'utilisateur veux changer le nom des clients
+                    //TODO Attentions aux fiches contenant ce nom, le nom du client des fiches sera également modifié
                     tilName.setHelperText(getString(R.string.NameExists));
-                    CLIENT_ID = client.getID(context);
+                    clientID = client.getID(context);
+                    CLIENT_ID = clientID;
                     setFields();
                     fabAnimate.showEdit();
 
@@ -340,7 +410,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (CLIENT_ID !=-1 && !s.equals(client.getAddress())) {
+                if (clientID !=-1 && !s.equals(client.getAddress())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -356,7 +426,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (CLIENT_ID !=-1 && !s.equals(client.getEmail())) {
+                if (clientID !=-1 && !s.equals(client.getEmail())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -401,7 +471,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (CLIENT_ID !=-1 && !s.equals(client.getbDay())) {
+                if (clientID !=-1 && !s.equals(client.getbDay())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -417,7 +487,7 @@ public class ClientEditFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (CLIENT_ID !=-1 && !s.equals(client.getNote())) {
+                if (clientID !=-1 && !s.equals(client.getNote())) {
                     fabAnimate.showEdit();
                 }
             }
@@ -482,7 +552,7 @@ public class ClientEditFragment extends Fragment {
     }
 
     public void updateNamesAdapter() {
-        ArrayAdapter<String> namesAdapter = new ArrayAdapter<>(context, R.layout.list_item_textfield, names);
+        ArrayAdapter<String> namesAdapter = new ArrayAdapter<>(context, R.layout.item_list_textview_simple, names);
         actvName.setAdapter(namesAdapter);
     }
 
@@ -490,23 +560,23 @@ public class ClientEditFragment extends Fragment {
 
         actvName.setText(client.getName());
 
-        client.setPhone(clientModel.getPhone(context, CLIENT_ID));
+        client.setPhone(clientModel.getPhone(context, clientID));
         actvPhone.setText(client.getPhone());
 
-        client.setAddress(clientModel.getAddress(context, CLIENT_ID));
+        client.setAddress(clientModel.getAddress(context, clientID));
         actvAddress.setText(client.getAddress());
 
-        client.setEmail(clientModel.getMail(context, CLIENT_ID));
+        client.setEmail(clientModel.getMail(context, clientID));
         actvMail.setText(client.getEmail());
 
-        client.setbDay(clientModel.getBday(context, CLIENT_ID));
+        client.setbDay(clientModel.getBday(context, clientID));
         if (client.getbDay()==null) {
             actvBday.setText("");
         }else {
             actvBday.setText(simpleDateFormat.format(client.getbDay()));
         }
 
-        client.setNote(clientModel.getNote(context, CLIENT_ID));
+        client.setNote(clientModel.getNote(context, clientID));
         etNote.setText(client.getNote());
 
     }
@@ -533,7 +603,7 @@ public class ClientEditFragment extends Fragment {
         }
         ArrayAdapter<String> phoneAdapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 phone
         );
         actvPhone.setAdapter(phoneAdapter);
@@ -547,7 +617,7 @@ public class ClientEditFragment extends Fragment {
         }
         ArrayAdapter<String> mailAdapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 mail
         );
         actvMail.setAdapter(mailAdapter);
@@ -561,7 +631,7 @@ public class ClientEditFragment extends Fragment {
         }
         ArrayAdapter<String> addressAdapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 address
         );
         actvAddress.setAdapter(addressAdapter);
@@ -575,7 +645,7 @@ public class ClientEditFragment extends Fragment {
         }
         ArrayAdapter<String> bDayAdapter = new ArrayAdapter<>(
                 context,
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 bDay
         );
         actvBday.setAdapter(bDayAdapter);

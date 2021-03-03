@@ -15,9 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcr.GestionClients.R;
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
+
 import static com.jcr.GestionClients.MainActivity.CAT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     @Override
     public CatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_item_big,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_big,parent,false);
         return new CatHolder(view);
     }
 
