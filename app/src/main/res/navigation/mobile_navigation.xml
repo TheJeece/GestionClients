@@ -114,7 +114,7 @@
 
     <fragment
         android:id="@+id/nav_AddClient"
-        android:name="com.jcr.GestionClients.ui.Clients.ClientEditFragment"
+        android:name="com.jcr.GestionClients.ui.Clients.ClientsFragmentEdit"
         android:label="@string/NewClient"
         tools:layout="+id/layout/fragment_client_edit">
         <action
@@ -125,6 +125,9 @@
         <action
             android:id="@+id/action_nav_AddClient_to_nav_SheetAdd"
             app:destination="@id/nav_SheetAdd" />
+        <action
+            android:id="@+id/action_nav_AddClient_self"
+            app:destination="@id/nav_AddClient" />
     </fragment>
 
     <fragment

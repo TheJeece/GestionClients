@@ -13,7 +13,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jcr.GestionClients.MainActivity;
 import com.jcr.GestionClients.R;
 import com.jcr.GestionClients.ui.Sheet.Sheet;
 
@@ -21,23 +20,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
 import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 
-public class ClientEditAdapter extends RecyclerView.Adapter<ClientEditAdapter.SheetHolder> {
+public class ClientAdapterHistory extends RecyclerView.Adapter<ClientAdapterHistory.SheetHolder> {
 
     Context context;
     List<Sheet> list = new ArrayList<>();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public ClientEditAdapter(Context context, List<Sheet> list) {
+    public ClientAdapterHistory(Context context, List<Sheet> list) {
         this.context = context;
         this.list=list;
     }
 
     @Override
     public SheetHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_item_small,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cardview_small,parent,false);
 
         return new SheetHolder(view);
     }

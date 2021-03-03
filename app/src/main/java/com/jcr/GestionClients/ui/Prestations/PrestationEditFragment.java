@@ -26,9 +26,7 @@ import com.jcr.GestionClients.fabAnimate;
 import java.util.List;
 
 import static com.jcr.GestionClients.MainActivity.fab;
-import static com.jcr.GestionClients.MainActivity.CLIENT_ID;
 import static com.jcr.GestionClients.MainActivity.CAT_ID;
-import static com.jcr.GestionClients.MainActivity.SHEET_ID;
 import static com.jcr.GestionClients.MainActivity.PRESTA_ID;
 
 public class PrestationEditFragment extends Fragment {
@@ -103,7 +101,7 @@ public class PrestationEditFragment extends Fragment {
     private void setAdapter(){
         catAdapter = new ArrayAdapter(
                 getContext(),
-                R.layout.list_item_textfield,
+                R.layout.item_list_textview_simple,
                 listCat
         );
     }
